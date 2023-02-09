@@ -74,6 +74,7 @@ class HREmployee(models.Model):
     )
     section = fields.Char(string="Section")
     sponsor = fields.Char(string="Sponsor")
+    sponsor_company_id = fields.Many2one('res.company', string="Sponsor Company")
     employee_name_arabic = fields.Char(string="Employee Name in Arabic")
     previous_employee_code = fields.Char(string="Previous Employee Code")
 
@@ -95,16 +96,19 @@ class HREmployee(models.Model):
     middle_name_passport = fields.Char(string="Middle Name - Passport")
     last_name_passport = fields.Char(string="Last Name - Passport")
     date_of_joining = fields.Date(string="Date of Joining")
+    service_period = fields.Float(string="Service Period")
     section = fields.Char(string="Section")
     civil_id = fields.Char(string="Civil ID")
     civil_expiry = fields.Date(string="Civil ID Expiry")
     passport_expiry_date = fields.Date(string="Passport Expiry Date")
     salary_pay_mode = fields.Char(string="Salary Pay Mode")
+    employee_bank_name = fields.Char(string="Employee Bank Name")
     bank_iban = fields.Char(string="Bank IBAN")
     work_permit_position = fields.Char(string="Work Permit Position")
     work_permit_salary = fields.Char(string="Work Permit Salary")
     personal_contact_no = fields.Char(string="Personal Contact Number")
     personal_email_id = fields.Char(string="Personal Email ID")
+    age = fields.Float(string="Age")
 
 
 

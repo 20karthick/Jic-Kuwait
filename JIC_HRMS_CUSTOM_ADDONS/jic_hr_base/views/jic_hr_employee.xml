@@ -16,6 +16,13 @@
             <field name="job_id" position="after">
                 <field name="exit_date"/>
             </field>
+<!--            karthick changes-->
+            <field name="mobile_phone" position="before">
+                <field name="employee_name_arabic"/>
+            </field>
+            <field name="birthday" position="after">
+                <field name="age"/>
+            </field>
             <xpath expr="//field[@name='tz']" position="after">
                 <field name="probation_period"/>
                 <field name="notice_period"/>
@@ -27,6 +34,7 @@
                 <field name="religion"/>
                 <field name="section"/>
                 <field name="sponsor"/>
+                <field name="sponsor_company_id"/>
             </xpath>
             <xpath expr="//page[@name='hr_settings']" position="after">
                 <page name="dependents" string="Dependents Details">
@@ -69,11 +77,13 @@
                 <field name="middle_name_passport"/>
                 <field name="last_name_passport"/>
                 <field name="date_of_joining"/>
+                <field name="service_period"/>
                 <field name="section"/>
                 <field name="civil_id"/>
                 <field name="civil_expiry"/>
                 <field name="passport_expiry_date"/>
                 <field name="salary_pay_mode"/>
+                <field name="employee_bank_name"/>
                 <field name="bank_iban"/>
                 <field name="work_permit_position"/>
                 <field name="work_permit_salary"/>
