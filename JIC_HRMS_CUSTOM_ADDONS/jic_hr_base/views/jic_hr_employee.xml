@@ -18,11 +18,24 @@
             </field>
 <!--            karthick changes-->
             <field name="mobile_phone" position="before">
-                <field name="employee_name_arabic"/>
+                <field name="employee_name_arabic"  attrs="{'invisible': [('enmfi','=',True)]}"/>
             </field>
             <field name="birthday" position="after">
                 <field name="age"/>
             </field>
+            <field name="company_id" position="after">
+                <field name="enmfi" invisible="1"/>
+                <field name="kuwait_company" invisible="1"/>
+            </field>
+            <group name="has_work_permit" position="replace">
+                <group string="Work Permit" name="has_work_permit" attrs="{'invisible': [('enmfi','=',True)]}">
+                    <field name="visa_no"/>
+                    <field name="permit_no"/>
+                    <field name="visa_expire"/>
+                    <field name="work_permit_expiration_date"/>
+                    <field name="has_work_permit"/>
+                </group>
+            </group>
             <xpath expr="//field[@name='tz']" position="after">
                 <field name="probation_period"/>
                 <field name="notice_period"/>
@@ -33,8 +46,8 @@
             <xpath expr="//field[@name='country_id']" position="after">
                 <field name="religion"/>
                 <field name="section"/>
-                <field name="sponsor"/>
-                <field name="sponsor_company_id"/>
+                <field name="sponsor" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="sponsor_company_id" attrs="{'invisible': [('enmfi','=',True)]}"/>
             </xpath>
             <xpath expr="//page[@name='hr_settings']" position="after">
                 <page name="dependents" string="Dependents Details">
@@ -72,6 +85,7 @@
                 </page>
             </xpath>
             <xpath expr="//field[@name='bank_account_id']" position="after">
+<!--                <field name="employee_bank_name"/>-->
                 <field name="emp_code_old"/>
                 <field name="first_name_passport"/>
                 <field name="middle_name_passport"/>
@@ -79,14 +93,13 @@
                 <field name="date_of_joining"/>
                 <field name="service_period"/>
                 <field name="section"/>
-                <field name="civil_id"/>
-                <field name="civil_expiry"/>
+                <field name="civil_id" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="civil_expiry" attrs="{'invisible': [('enmfi','=',True)]}"/>
                 <field name="passport_expiry_date"/>
                 <field name="salary_pay_mode"/>
-                <field name="employee_bank_name"/>
                 <field name="bank_iban"/>
-                <field name="work_permit_position"/>
-                <field name="work_permit_salary"/>
+                <field name="work_permit_position" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="work_permit_salary" attrs="{'invisible': [('enmfi','=',True)]}"/>
                 <field name="personal_contact_no"/>
                 <field name="personal_email_id"/>
             </xpath>

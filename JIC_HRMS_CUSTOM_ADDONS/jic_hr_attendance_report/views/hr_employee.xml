@@ -11,6 +11,8 @@
                 <group>
                     <group>
                         <field name="attendance_report_range"/>
+                    </group>
+                    <group>
                         <button name="button_attendance_report" icon="fa-download" string="Attendance Report" type="object"/>
                         <button name="send_attendance_report_xlsx_mail_to_employee" string="Email" type="object"/>
                     </group>
