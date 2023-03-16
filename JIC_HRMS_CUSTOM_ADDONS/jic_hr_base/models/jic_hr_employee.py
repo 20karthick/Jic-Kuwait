@@ -154,8 +154,8 @@ class HREmployee(models.Model):
     incentive = fields.Float(string="Incentive")
     gmi_release = fields.Float(string="GMI Release")
 
-    enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", related="company_id.enmfi")
-    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", related="company_id.kuwait_company")
+    enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.")
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
     def _compute_employee_salary(self):
         for rec in self:
