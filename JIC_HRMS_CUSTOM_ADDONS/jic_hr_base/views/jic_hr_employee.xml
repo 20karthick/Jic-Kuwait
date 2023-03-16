@@ -25,7 +25,6 @@
             </field>
             <field name="company_id" position="after">
                 <field name="enmfi" invisible="1"/>
-                <field name="kuwait_company" invisible="1"/>
             </field>
             <group name="has_work_permit" position="replace">
                 <group string="Work Permit" name="has_work_permit" attrs="{'invisible': [('enmfi','=',True)]}">

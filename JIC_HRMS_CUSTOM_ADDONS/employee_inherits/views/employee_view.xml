@@ -99,9 +99,10 @@
                    <page string="Leave Information" name="information">
                        <field name="employee_leave_details_ids" readonly="1" options="{'no_open': True,'no_create':True}"></field>
                    </page>
-
               </notebook>
-
+              <field name="enmfi" position="after">
+                <field name="kuwait_company" invisible="1"/>
+            </field>
               <field name="department_id" position="before">
                 <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="esi" attrs="{'invisible': [('kuwait_company','=',True)]}"/>

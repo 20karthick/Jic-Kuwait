@@ -39,6 +39,8 @@ class HrEmployeeInherits(models.Model):
     other_earnings = fields.Float(string="Other Earnings")
     incentive = fields.Float(string="Incentive")
     gmi_release = fields.Float(string="GMI Release")
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", related="company_id.kuwait_company")
+
 
 
 
@@ -61,7 +63,10 @@ class HrEmployeeInherits(models.Model):
             rec.gmi_release = rec.contract_id.gmi_release
 
 
+class ResCompanyInherit(models.Model):
+    _inherit = 'res.company'
 
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
 class HrContractInherits(models.Model):
     _inherit = 'hr.contract'

@@ -42,7 +42,6 @@ class ResCompanyInherits(models.Model):
     _inherit = 'res.company'
 
     enmfi = fields.Boolean(string="Indian Company", help="Non mandatory fields hide for indian company.")
-    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
 class HREmployee(models.Model):
 
@@ -115,7 +114,6 @@ class HREmployee(models.Model):
     personal_email_id = fields.Char(string="Personal Email ID")
     age = fields.Float(string="Age")
     enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", related="company_id.enmfi")
-    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", related="company_id.kuwait_company")
 
     @api.model
     def create(self, values):
