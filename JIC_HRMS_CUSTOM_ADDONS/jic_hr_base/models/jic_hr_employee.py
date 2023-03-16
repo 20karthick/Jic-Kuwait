@@ -1,5 +1,10 @@
 from odoo import models, fields, api
 
+class ResCompanyInherits(models.Model):
+    _inherit = 'res.company'
+
+    enmfi = fields.Boolean(string="Indian Company", help="Non mandatory fields hide for indian company.")
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
 class HREmployeePublic(models.Model):
 
@@ -38,11 +43,7 @@ class HREmployeePublic(models.Model):
     personal_contact_no = fields.Char(related="employee_id.personal_contact_no", readonly=True)
     personal_email_id = fields.Char(related="employee_id.personal_email_id", readonly=True)
 
-class ResCompanyInherits(models.Model):
-    _inherit = 'res.company'
 
-    enmfi = fields.Boolean(string="Indian Company", help="Non mandatory fields hide for indian company.")
-    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
 class HREmployee(models.Model):
 
