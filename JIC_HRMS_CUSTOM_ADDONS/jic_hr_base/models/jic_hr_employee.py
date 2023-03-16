@@ -1,10 +1,10 @@
 from odoo import models, fields, api
 
-# class ResCompanyInherits(models.Model):
-#     _inherit = 'res.company'
-#
-#     enmfi = fields.Boolean(string="Indian Company", help="Non mandatory fields hide for indian company.")
-#     kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
+class ResCompanyInherits(models.Model):
+    _inherit = 'res.company'
+
+    enmfi = fields.Boolean(string="Indian Company", help="Non mandatory fields hide for indian company.")
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
 
 class HREmployeePublic(models.Model):
 
@@ -153,9 +153,17 @@ class HREmployee(models.Model):
     other_earnings = fields.Float(string="Other Earnings")
     incentive = fields.Float(string="Incentive")
     gmi_release = fields.Float(string="GMI Release")
-    #
-    # enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.")
-    # kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.")
+
+    enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", compute='_compute_company')
+    kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", compute='_compute_company')
+
+
+    def _compute_company(self):
+        if self.company_id:
+            for rec in self:
+                rec.enmfi = rec.company_id.enmfi
+                rec.kuwait_company = rec.company_id.kuwait_company
+
 
     def _compute_employee_salary(self):
         for rec in self:

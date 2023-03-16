@@ -2,17 +2,17 @@
 <odoo>
 
     <!--  Form view  -->
-<!--    <record id="res_company_inherits_form" model="ir.ui.view">-->
-<!--        <field name="name">ResCompanyInherit</field>-->
-<!--        <field name="model">res.company</field>-->
-<!--        <field name="inherit_id" ref="base.view_company_form"/>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <field name="website" position="after">-->
-<!--                <field name="enmfi"/>-->
-<!--                <field name="kuwait_company"/>-->
-<!--            </field>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record id="res_company_inherits_form" model="ir.ui.view">
+        <field name="name">res.company.inherits</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="enmfi"/>
+                <field name="kuwait_company"/>
+            </field>
+        </field>
+    </record>
 
     <record id="hr_employee_sequence_form" model="ir.ui.view">
         <field name="name">Employee</field>
@@ -28,19 +28,19 @@
             <field name="job_id" position="after">
                 <field name="exit_date"/>
             </field>
-<!--            <field name="company_id" position="after">-->
-<!--                <field name="enmfi" invisible="1"/>-->
-<!--                <field name="kuwait_company" invisible="1"/>-->
-<!--            </field>-->
+            <field name="company_id" position="after">
+                <field name="enmfi" invisible="1"/>
+                <field name="kuwait_company" invisible="1"/>
+            </field>
 <!--            karthick changes-->
             <field name="mobile_phone" position="before">
-                <field name="employee_name_arabic"/>
+                <field name="employee_name_arabic"  attrs="{'invisible': [('enmfi','=',True)]}"/>
             </field>
             <field name="birthday" position="after">
                 <field name="age"/>
             </field>
             <group name="has_work_permit" position="replace">
-                <group string="Work Permit" name="has_work_permit">
+                <group string="Work Permit" name="has_work_permit" attrs="{'invisible': [('enmfi','=',True)]}">
                     <field name="visa_no"/>
                     <field name="permit_no"/>
                     <field name="visa_expire"/>
@@ -58,8 +58,8 @@
             <xpath expr="//field[@name='country_id']" position="after">
                 <field name="religion"/>
                 <field name="section"/>
-                <field name="sponsor" />
-                <field name="sponsor_company_id"/>
+                <field name="sponsor" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="sponsor_company_id" attrs="{'invisible': [('enmfi','=',True)]}"/>
             </xpath>
             <xpath expr="//page[@name='hr_settings']" position="after">
                 <page name="dependents" string="Dependents Details">
@@ -105,13 +105,13 @@
                 <field name="date_of_joining"/>
                 <field name="service_period"/>
                 <field name="section"/>
-                <field name="civil_id"/>
-                <field name="civil_expiry"/>
+                <field name="civil_id" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="civil_expiry" attrs="{'invisible': [('enmfi','=',True)]}"/>
                 <field name="passport_expiry_date"/>
                 <field name="salary_pay_mode"/>
                 <field name="bank_iban"/>
-                <field name="work_permit_position"/>
-                <field name="work_permit_salary"/>
+                <field name="work_permit_position" attrs="{'invisible': [('enmfi','=',True)]}"/>
+                <field name="work_permit_salary" attrs="{'invisible': [('enmfi','=',True)]}"/>
                 <field name="personal_contact_no"/>
                 <field name="personal_email_id"/>
             </xpath>
@@ -219,26 +219,26 @@
 
               </notebook>
               <field name="department_id" position="before">
-                <field name="uan" />
-                <field name="esi" />
-                <field name="wwf" />
+                <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="esi" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="wwf" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
             </field>
               <field name="country_of_birth" position="after">
-                <field name="present_address" />
-                <field name="aadhar_number" />
-                <field name="pan" />
-                <field name="father_name" />
-                <field name="mother_name" />
+                <field name="present_address" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="aadhar_number" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="pan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="father_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="mother_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
             </field>
                <field name="work_location_id" position="after">
-                <field name="date_of_promotions" />
-                <field name="date_of_increments" />
-                <field name="date_of_promotions" />
-                <field name="date_of_resignation" />
-                <field name="last_working_day" />
-                <field name="employee_bank_name" />
-                <field name="ifsc" />
-                <field name="bank_account_id" />
+                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="date_of_increments" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="date_of_resignation" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="last_working_day" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="employee_bank_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="ifsc" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="bank_account_id" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
             </field>
           </field>
       </record>
