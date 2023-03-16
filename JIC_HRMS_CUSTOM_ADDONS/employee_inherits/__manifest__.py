@@ -13,7 +13,7 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base', 'hr', 'hr_holidays','jic_hr_base'],
+    'depends': ['base', 'hr', 'hr_holidays'],
     'live_test_url': '',
     'data': ['views/employee_view.xml',
              ],

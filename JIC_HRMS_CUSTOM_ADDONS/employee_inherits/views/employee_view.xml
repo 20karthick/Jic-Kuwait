@@ -1,144 +1,143 @@
 <odoo>
   <data>
 
-    <record id="hr_employee_form_inherits" model="ir.ui.view">
-          <field name="name">Employee</field>
-          <field name="model">hr.employee</field>
-          <field name="inherit_id" ref="hr.view_employee_form"/>
-          <field name="arch" type="xml">
-              <notebook position="inside">
-                <page string="Salary Information" name="information">
-                    <group name="salary_info">
-                        <group name="salary" string="Earnings / Amount">
-                            <label for="wage"/>
-                            <div class="o_row" name="wage">
-                                <field name="wage" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="misc_allowance"/>
-                            <div class="o_row">
-                                <field name="misc_allowance" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="variable_inc"/>
-                            <div class="o_row">
-                                <field name="variable_inc" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="arrears"/>
-                            <div class="o_row">
-                                <field name="arrears" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="other_earnings"/>
-                            <div class="o_row">
-                                <field name="other_earnings" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="incentive"/>
-                            <div class="o_row">
-                                <field name="incentive" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="gmi_release"/>
-                            <div class="o_row">
-                                <field name="gmi_release" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                        </group>
-                       <group string="Deduction / Amount" name='allowances'>
-                            <label for="hra"/>
-                            <div class="o_row">
-                                <field name="hra" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="da"/>
-                            <div class="o_row">
-                                <field name="da" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="travel_allowance"/>
-                            <div class="o_row">
+<!--    <record id="hr_employee_form_inherits" model="ir.ui.view">-->
+<!--          <field name="name">Employee</field>-->
+<!--          <field name="model">hr.employee</field>-->
+<!--          <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--          <field name="arch" type="xml">-->
+<!--              <notebook position="inside">-->
+<!--                <page string="Salary Information" name="information">-->
+<!--                    <group name="salary_info">-->
+<!--                        <group name="salary" string="Earnings / Amount">-->
+<!--                            <label for="wage"/>-->
+<!--                            <div class="o_row" name="wage">-->
+<!--                                <field name="wage" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="misc_allowance"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="misc_allowance" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="variable_inc"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="variable_inc" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="arrears"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="arrears" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="other_earnings"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="other_earnings" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="incentive"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="incentive" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="gmi_release"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="gmi_release" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                       <group string="Deduction / Amount" name='allowances'>-->
+<!--                            <label for="hra"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="hra" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="da"/>-->
+<!--                            <div class="o_row">-->
+<!--                                <field name="da" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="travel_allowance"/>-->
+<!--                            <div class="o_row">-->
 
-                                <field name="travel_allowance" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="meal_allowance"/>
-                            <div class="o_row">
+<!--                                <field name="travel_allowance" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="meal_allowance"/>-->
+<!--                            <div class="o_row">-->
 
-                                <field name="meal_allowance" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="medical_allowance"/>
-                            <div class="o_row">
+<!--                                <field name="meal_allowance" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="medical_allowance"/>-->
+<!--                            <div class="o_row">-->
 
-                                <field name="medical_allowance" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                            <label for="other_allowance"/>
-                            <div class="o_row">
+<!--                                <field name="medical_allowance" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                            <label for="other_allowance"/>-->
+<!--                            <div class="o_row">-->
 
-                                <field name="other_allowance" widget="monetary" nolabel="1"/>
-                                <span>/ month</span>
-                            </div>
-                           <label for="employee_contribution_perc"/>
-                                <div class="o_row">
-                                    <field name="employee_contribution_perc" widget="monetary" nolabel="1"/>
-                                    <span>/ month</span>
-                                </div>
-                                <label for="employer_contribution_perc"/>
-                                <div class="o_row">
-                                    <field name="employer_contribution_perc" widget="monetary" nolabel="1"/>
-                                    <span>/ month</span>
-                                </div>
-                        </group>
-                    </group>
-                </page>
-            </notebook>
-              <notebook position="inside">
-                   <page string="Leave Information" name="information">
-                       <field name="employee_leave_details_ids" readonly="1" options="{'no_open': True,'no_create':True}"></field>
-                   </page>
-              </notebook>
-              <field name="enmfi" position="after">
-                <field name="kuwait_company" invisible="1"/>
-            </field>
-              <field name="department_id" position="before">
-                <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="esi" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="wwf" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-            </field>
-              <field name="country_of_birth" position="after">
-                <field name="present_address" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="aadhar_number" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="pan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="father_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="mother_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-            </field>
-               <field name="work_location_id" position="after">
-                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="date_of_increments" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="date_of_resignation" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="last_working_day" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="employee_bank_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="ifsc" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="bank_account_id" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-            </field>
-          </field>
-      </record>
+<!--                                <field name="other_allowance" widget="monetary" nolabel="1"/>-->
+<!--                                <span>/ month</span>-->
+<!--                            </div>-->
+<!--                           <label for="employee_contribution_perc"/>-->
+<!--                                <div class="o_row">-->
+<!--                                    <field name="employee_contribution_perc" widget="monetary" nolabel="1"/>-->
+<!--                                    <span>/ month</span>-->
+<!--                                </div>-->
+<!--                                <label for="employer_contribution_perc"/>-->
+<!--                                <div class="o_row">-->
+<!--                                    <field name="employer_contribution_perc" widget="monetary" nolabel="1"/>-->
+<!--                                    <span>/ month</span>-->
+<!--                                </div>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </notebook>-->
+<!--              <notebook position="inside">-->
+<!--                   <page string="Leave Information" name="information">-->
+<!--                       <field name="employee_leave_details_ids" readonly="1" options="{'no_open': True,'no_create':True}"></field>-->
+<!--                   </page>-->
 
-         <record id="res_company_inherits_form" model="ir.ui.view">
-        <field name="name">ResCompanyInherit</field>
-        <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form"/>
-        <field name="arch" type="xml">
-            <field name="website" position="after">
-                <field name="enmfi"/>
-                <field name="kuwait_company"/>
-            </field>
-        </field>
-    </record>
+<!--              </notebook>-->
+
+<!--              <field name="department_id" position="before">-->
+<!--                <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="esi" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="wwf" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--            </field>-->
+<!--              <field name="country_of_birth" position="after">-->
+<!--                <field name="present_address" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="aadhar_number" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="pan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="father_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="mother_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--            </field>-->
+<!--               <field name="work_location_id" position="after">-->
+<!--                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="date_of_increments" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="date_of_promotions" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="date_of_resignation" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="last_working_day" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="employee_bank_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="ifsc" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--                <field name="bank_account_id" attrs="{'invisible': [('kuwait_company','=',True)]}"/>-->
+<!--            </field>-->
+<!--          </field>-->
+<!--      </record>-->
+
+<!--         <record id="res_company_inherits_form" model="ir.ui.view">-->
+<!--        <field name="name">ResCompanyInherit</field>-->
+<!--        <field name="model">res.company</field>-->
+<!--        <field name="inherit_id" ref="base.view_company_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="website" position="after">-->
+<!--                <field name="enmfi"/>-->
+<!--                <field name="kuwait_company"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
 
       <record id="hr_contract_form_additional_allowance_inherits" model="ir.ui.view">
         <field name="name">hr.contract.view.additional.allowance.inherit</field>
