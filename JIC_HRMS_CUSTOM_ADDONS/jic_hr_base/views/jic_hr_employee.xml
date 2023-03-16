@@ -2,17 +2,17 @@
 <odoo>
 
     <!--  Form view  -->
-    <record id="res_company_inherits_form" model="ir.ui.view">
-        <field name="name">ResCompanyInherit</field>
-        <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form"/>
-        <field name="arch" type="xml">
-            <field name="website" position="after">
-                <field name="enmfi"/>
-                <field name="kuwait_company"/>
-            </field>
-        </field>
-    </record>
+<!--    <record id="res_company_inherits_form" model="ir.ui.view">-->
+<!--        <field name="name">ResCompanyInherit</field>-->
+<!--        <field name="model">res.company</field>-->
+<!--        <field name="inherit_id" ref="base.view_company_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="website" position="after">-->
+<!--                <field name="enmfi"/>-->
+<!--                <field name="kuwait_company"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
 
     <record id="hr_employee_sequence_form" model="ir.ui.view">
         <field name="name">Employee</field>
@@ -28,10 +28,10 @@
             <field name="job_id" position="after">
                 <field name="exit_date"/>
             </field>
-            <field name="company_id" position="after">
-                <field name="enmfi" invisible="1"/>
-                <field name="kuwait_company" invisible="1"/>
-            </field>
+<!--            <field name="company_id" position="after">-->
+<!--                <field name="enmfi" invisible="1"/>-->
+<!--                <field name="kuwait_company" invisible="1"/>-->
+<!--            </field>-->
 <!--            karthick changes-->
             <field name="mobile_phone" position="before">
                 <field name="employee_name_arabic"/>
