@@ -1,2 +1,2 @@
 # Jic-Kuwait
-kuwait project
+kuwait LIVE
