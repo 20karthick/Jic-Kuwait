@@ -20,8 +20,13 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@class='oe_title']/h1[@class='d-flex']" position="before">
-                <h4><field name="emp_code" nolabel="1" readonly="1"/></h4>
+                <label for="emp_code" string="Employee ID"/>
+                <h4><field name="emp_code" /></h4>
             </xpath>
+<!--            <field name="category_ids" position="after">-->
+<!--                <label for="employer_contribution_perc"/>-->
+<!--                <h4><field name="emp_code" string="Employee ID" /></h4>-->
+<!--            </field>-->
             <xpath expr="//field[@name='coach_id']" position="after">
                 <field name="grade_id"/>
             </xpath>
@@ -115,6 +120,16 @@
                 <field name="personal_contact_no"/>
                 <field name="personal_email_id"/>
             </xpath>
+            <xpath expr="//page[@name='personal_information']" position="attributes">
+                <attribute name="string">Personal Information</attribute>
+            </xpath>
+            <field name="address_home_id" position="attributes">
+                <attribute name="string">Permanent Address</attribute>
+            </field>
+            <field name="private_email" position="replace">
+            </field>
+             <field name="phone" position="replace">
+            </field>
         </field>
     </record>
 
@@ -218,13 +233,23 @@
                    </page>
 
               </notebook>
+              <field name="address_home_id" position="after">
+                <label for="present_address" string="Present Address"/>
+                    <div class="o_address_format">
+                        <field name="present_address" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+              </field>
               <field name="department_id" position="before">
-                <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="esi" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="wwf" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-            </field>
+                  <field name="wwf" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                  <field name="uan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+              </field>
               <field name="country_of_birth" position="after">
-                <field name="present_address" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="aadhar_number" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="pan" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="father_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
@@ -254,6 +279,18 @@
                 <field name="grade_id"/>
             </xpath>
         </field>
+    </record>
+    <record id="hr_employee_inherit_form" model="ir.ui.view">
+        <field name="name">inherit.hr.employee</field>
+         <field name="model">hr.employee</field>
+         <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('employee_inherits.employee_rbac')])]"/>
+         <field name="arch" type="xml">
+             <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+         </field>
     </record>
 
     <!-- ==================== HR PUBLIC ==================== -->

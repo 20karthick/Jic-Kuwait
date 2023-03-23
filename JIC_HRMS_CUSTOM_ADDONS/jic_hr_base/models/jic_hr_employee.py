@@ -10,7 +10,7 @@ class HREmployeePublic(models.Model):
 
     _inherit = 'hr.employee.public'
 
-    emp_code = fields.Char(related="employee_id.emp_code", readonly=True)
+    emp_code = fields.Char(related="employee_id.emp_code", string="Employee ID", readonly=True)
     state = fields.Selection(related="employee_id.state", readonly=True)
     exit_date = fields.Date(related="employee_id.exit_date", readonly=True)
     probation_period = fields.Integer(related="employee_id.probation_period", readonly=True)
@@ -49,7 +49,7 @@ class HREmployee(models.Model):
 
     _inherit = 'hr.employee'
 
-    emp_code = fields.Char("Employee Code")
+    emp_code = fields.Char(string="Employee ID")
     grade_id = fields.Many2one("hr.employee.grade", string="Grade")
     exit_date = fields.Date(string="Exit Date", help="Last working day of the employee")
     probation_period = fields.Integer(string="Probation Period in Days", tracking=True)
@@ -129,11 +129,18 @@ class HREmployee(models.Model):
     employee_contribution_perc = fields.Float(string="Employee Contribution %", compute='_compute_employee_salary')
     employer_contribution_perc = fields.Float(string="Employer Contribution %", compute='_compute_employee_salary')
     employee_leave_details_ids = fields.Many2many('hr.leave', string="Employee Leave Information")
+
     uan = fields.Integer(string="UAN Number")
     esi = fields.Integer(string="ESI Number")
     wwf = fields.Integer(string="WWF Number")
+    # address
+    present_address = fields.Char('Street')
+    street2 = fields.Char('Street2')
+    zip = fields.Char('Zip')
+    city = fields.Char('City')
+    state_id = fields.Many2one("res.country.state", string='State')
+    country_id = fields.Many2one('res.country', string='Country')
 
-    present_address = fields.Char(string="Present Address")
     aadhar_number = fields.Char(string="Aadhar Number")
     pan = fields.Char(string="PAN Number")
     father_name = fields.Char(string="Father Name")
@@ -147,12 +154,12 @@ class HREmployee(models.Model):
     date_of_probation = fields.Date(string="Date of Probation Confirmation")
     employee_bank_name = fields.Char(string="Employee Bank Name")
 
-    misc_allowance = fields.Float(string="Misc.Allowance")
-    variable_inc = fields.Float(string="Variable Inc")
-    arrears = fields.Float(string="Arrears")
-    other_earnings = fields.Float(string="Other Earnings")
-    incentive = fields.Float(string="Incentive")
-    gmi_release = fields.Float(string="GMI Release")
+    misc_allowance = fields.Float(string="Misc.Allowance", compute='_compute_employee_salary')
+    variable_inc = fields.Float(string="Variable Inc", compute='_compute_employee_salary')
+    arrears = fields.Float(string="Arrears", compute='_compute_employee_salary')
+    other_earnings = fields.Float(string="Other Earnings", compute='_compute_employee_salary')
+    incentive = fields.Float(string="Incentive", compute='_compute_employee_salary')
+    gmi_release = fields.Float(string="GMI Release", compute='_compute_employee_salary')
 
     enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", compute='_compute_company')
     kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", compute='_compute_company')

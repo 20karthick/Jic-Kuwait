@@ -13,10 +13,21 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base', 'hr', 'hr_holidays'],
+    'depends': ['base','project', 'hr', 'auth_signup', 'mail', 'hr_holidays','hr_skills'],
     'live_test_url': '',
     'data': ['views/employee_view.xml',
-             ],
+             'views/mail_template.xml',
+             'views/header_footer.xml',
+             'security/employee_security.xml',],
+
+    'assets': {
+        'web.assets_backend': [
+            '/employee_inherits/static/src/js/action.js',
+        ],
+        'web.assets_qweb': [
+
+            ],
+    },
     'pre_init_hook': '',
     'installable': True,
     'application': False,
