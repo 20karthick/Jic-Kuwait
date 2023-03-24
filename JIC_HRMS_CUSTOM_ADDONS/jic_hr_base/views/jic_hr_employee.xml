@@ -279,7 +279,7 @@
                 <field name="last_working_day" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="employee_bank_name" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="ifsc" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
-                <field name="bank_id" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
+                <field name="bank_account_id" attrs="{'invisible': [('kuwait_company','=',True)]}"/>
                 <field name="emp_code_old"/>
                 <field name="date_of_joining"/>
                 <field name="service_period"/>

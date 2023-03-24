@@ -154,12 +154,6 @@ class HREmployee(models.Model):
     date_of_increments = fields.Date(string="Date of Increments")
     date_of_probation = fields.Date(string="Date of Probation Confirmation")
     employee_bank_name = fields.Char(string="Employee Bank Name")
-    bank_id = fields.Many2one('res.partner.bank', 'Bank Account Number',
-        domain="[('partner_id', '=', address_home_id), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        groups="hr.group_hr_user",
-        tracking=True,
-        help='Employee bank salary account')
-
     misc_allowance = fields.Float(string="Misc.Allowance", compute='_compute_employee_salary')
     variable_inc = fields.Float(string="Variable Inc", compute='_compute_employee_salary')
     arrears = fields.Float(string="Arrears", compute='_compute_employee_salary')
