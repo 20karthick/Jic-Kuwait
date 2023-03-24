@@ -13,7 +13,7 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base','project', 'hr', 'auth_signup', 'mail', 'hr_holidays','hr_skills'],
+    'depends': ['base','web','project', 'hr', 'auth_signup', 'mail', 'hr_holidays','hr_skills'],
     'live_test_url': '',
     'data': ['views/employee_view.xml',
              'views/mail_template.xml',
@@ -28,6 +28,7 @@
 
             ],
     },
+
     'pre_init_hook': '',
     'installable': True,
     'application': False,

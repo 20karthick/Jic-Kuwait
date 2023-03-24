@@ -15,10 +15,12 @@
                                 </div>
                                 <t t-raw="0"/>
                                 <div class="text-center small mt-4 pt-3 border-top" t-if="not disable_footer">
-                                    <t t-if="not disable_database_manager">
-                                        <a class="border-right pr-2 mr-1" href="/web/database/manager">Manage Databases</a>
+                                    <t t-if="not disable_database_manager and ">
+                                        <t t-if="debug">
+                                            <a class="border-right pr-2 mr-1" href="/web/database/manager">Manage Databases</a>
+                                        </t>
                                     </t>
-                                    <a href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" target="_blank">Powered by <span>Odoo</span></a>
+                                    <a href="https://jicitsolution.com/" target="_blank">Powered by <span>JIC IT SOLUTIONS</span></a>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +65,9 @@
                         <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm btn-block">Log in as superuser</button>
                     </t>
                     <div class="justify-content-between mt-2 d-flex small">
+                        <t t-if="debug">
                         <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}">Don't have an account?</a>
+                        </t>
                         <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
                     </div>
                     <div class="o_login_auth"/>
