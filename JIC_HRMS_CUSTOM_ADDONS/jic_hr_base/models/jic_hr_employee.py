@@ -42,7 +42,6 @@ class HREmployeePublic(models.Model):
     work_permit_salary = fields.Char(related="employee_id.work_permit_salary", readonly=True)
     personal_contact_no = fields.Char(related="employee_id.personal_contact_no", readonly=True)
     personal_email_id = fields.Char(related="employee_id.personal_email_id", readonly=True)
-    country_id = fields.Many2one(related="employee_id.country_id", readonly=True)
 
 
 
@@ -154,6 +153,7 @@ class HREmployee(models.Model):
     date_of_increments = fields.Date(string="Date of Increments")
     date_of_probation = fields.Date(string="Date of Probation Confirmation")
     employee_bank_name = fields.Char(string="Employee Bank Name")
+
     misc_allowance = fields.Float(string="Misc.Allowance", compute='_compute_employee_salary')
     variable_inc = fields.Float(string="Variable Inc", compute='_compute_employee_salary')
     arrears = fields.Float(string="Arrears", compute='_compute_employee_salary')
