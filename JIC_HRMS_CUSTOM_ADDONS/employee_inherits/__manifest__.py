@@ -13,12 +13,13 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base','web','project', 'hr', 'auth_signup', 'mail', 'hr_holidays','hr_skills'],
+    'depends': ['base', 'web', 'project', 'hr_attendance', 'hr', 'auth_signup', 'mail', 'hr_holidays', 'hr_skills'],
     'live_test_url': '',
     'data': ['views/employee_view.xml',
              'views/mail_template.xml',
              'views/header_footer.xml',
-             'security/employee_security.xml',],
+             'security/employee_security.xml',
+             'security/ir.model.access.csv'],
 
     'assets': {
         'web.assets_backend': [

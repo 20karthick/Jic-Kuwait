@@ -114,6 +114,29 @@
             </field>
         </field>
     </record>
+    <record id="hr_attendance_view_inherits_form" model="ir.ui.view">
+        <field name="name">HrAttendanceForm</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+             <field name="employee_id" position="after">
+                <field name="emp_code"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="worked_hours"/>
+            </field>
+        </field>
+    </record>
+      <record id="hr_attendance_view_inherits_tree" model="ir.ui.view">
+        <field name="name">HrAttendanceList</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="emp_code"/>
+            </field>
+        </field>
+    </record>
 
       <record id="action_model_res_users_user_group_access" model="ir.actions.server">
         <field name="name">Employee Access Rights</field>
@@ -122,5 +145,34 @@
         <field name="state">code</field>
         <field name="code">action = records.user_group_access()</field>
     </record>
+      <record id="import_attendance_form" model="ir.ui.view">
+        <field name="name">Attendance Import</field>
+        <field name="model">attendance.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="upload_file"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_submit" string="Import" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_import_attendance">
+        <field name="name">Attendance Import Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">attendance.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+              <menuitem id="menu_import_attendance_import"
+                  name="Import Attendance Data"
+                  parent="hr_attendance.menu_hr_attendance_settings"
+                  action="action_import_attendance" sequence="100"/>
   </data>
 </odoo>

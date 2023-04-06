@@ -134,6 +134,13 @@ class HREmployee(models.Model):
     esi = fields.Integer(string="ESI Number")
     wwf = fields.Integer(string="WWF Number")
     # address
+    permanent_address = fields.Char('Street')
+    p_street2 = fields.Char('Street2')
+    p_zip = fields.Char('Zip')
+    p_city = fields.Char('City')
+    p_state_id = fields.Many2one("res.country.state", string='State')
+    p_country_id = fields.Many2one('res.country', string='Country')
+    # address
     present_address = fields.Char('Street')
     street2 = fields.Char('Street2')
     zip = fields.Char('Zip')
