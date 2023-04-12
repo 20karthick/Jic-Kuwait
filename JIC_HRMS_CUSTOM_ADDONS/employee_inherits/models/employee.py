@@ -12,12 +12,12 @@ import xlrd
 class HrContractInherits(models.Model):
     _inherit = 'hr.contract'
 
-    misc_allowance = fields.Float(string="Misc.Allowance")
-    variable_inc = fields.Float(string="Variable Inc")
-    arrears = fields.Float(string="Arrears")
-    other_earnings = fields.Float(string="Other Earnings")
-    incentive = fields.Float(string="Incentive")
-    gmi_release = fields.Float(string="GMI Release")
+    misc_allowance = fields.Monetary(string="Misc.Allowance")
+    variable_inc = fields.Monetary(string="Variable Inc")
+    arrears = fields.Monetary(string="Arrears")
+    other_earnings = fields.Monetary(string="Other Earnings")
+    incentive = fields.Monetary(string="Incentive")
+    gmi_release = fields.Monetary(string="GMI Release")
 
 
 class ResumeLineInherit(models.Model):

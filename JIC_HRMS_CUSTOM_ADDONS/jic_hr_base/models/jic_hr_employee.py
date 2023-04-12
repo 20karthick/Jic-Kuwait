@@ -161,12 +161,12 @@ class HREmployee(models.Model):
     date_of_probation = fields.Date(string="Date of Probation Confirmation")
     employee_bank_name = fields.Char(string="Employee Bank Name")
 
-    misc_allowance = fields.Float(string="Misc.Allowance", compute='_compute_employee_salary')
-    variable_inc = fields.Float(string="Variable Inc", compute='_compute_employee_salary')
-    arrears = fields.Float(string="Arrears", compute='_compute_employee_salary')
-    other_earnings = fields.Float(string="Other Earnings", compute='_compute_employee_salary')
-    incentive = fields.Float(string="Incentive", compute='_compute_employee_salary')
-    gmi_release = fields.Float(string="GMI Release", compute='_compute_employee_salary')
+    misc_allowance = fields.Monetary(string="Misc.Allowance", compute='_compute_employee_salary')
+    variable_inc = fields.Monetary(string="Variable Inc", compute='_compute_employee_salary')
+    arrears = fields.Monetary(string="Arrears", compute='_compute_employee_salary')
+    other_earnings = fields.Monetary(string="Other Earnings", compute='_compute_employee_salary')
+    incentive = fields.Monetary(string="Incentive", compute='_compute_employee_salary')
+    gmi_release = fields.Monetary(string="GMI Release", compute='_compute_employee_salary')
 
     enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", compute='_compute_company')
     kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", compute='_compute_company')
@@ -203,3 +203,12 @@ class HREmployee(models.Model):
             values['emp_code'] = self.env[
                 'ir.sequence'].next_by_code('jic.employee.sequence')
         return super(HREmployee, self).create(values)
+
+    @api.model
+    def action_get(self):
+        return self.env['ir.actions.act_window']._for_xml_id('jic_hr_base.open_view_employee_list_my_inherit')
+
+    @api.model
+    def emp_id_get(self):
+        emp_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
+        return emp_id.id

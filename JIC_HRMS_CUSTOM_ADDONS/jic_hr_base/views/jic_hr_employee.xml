@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <record id="open_view_employee_list_my_inherit" model="ir.actions.act_window">
+            <field name="name">Employees Preferences</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+            <field name="context">{'from_my_profile': True}</field>
+            <field name="view_id" ref="hr.view_employee_form"/>
+        </record>
     <!--  Form view  -->
     <record id="res_company_inherits_form" model="ir.ui.view">
         <field name="name">res.company.inherits</field>
@@ -202,32 +209,32 @@
                             </div>
                             <label for="misc_allowance"/>
                             <div class="o_row">
-                                <field name="misc_allowance" nolabel="1"/>
+                                <field name="misc_allowance" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                             <label for="variable_inc"/>
                             <div class="o_row">
-                                <field name="variable_inc" nolabel="1"/>
+                                <field name="variable_inc" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                             <label for="arrears"/>
                             <div class="o_row">
-                                <field name="arrears" nolabel="1"/>
+                                <field name="arrears" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                             <label for="other_earnings"/>
                             <div class="o_row">
-                                <field name="other_earnings" nolabel="1"/>
+                                <field name="other_earnings" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                             <label for="incentive"/>
                             <div class="o_row">
-                                <field name="incentive" nolabel="1"/>
+                                <field name="incentive" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                             <label for="gmi_release"/>
                             <div class="o_row">
-                                <field name="gmi_release" nolabel="1"/>
+                                <field name="gmi_release" widget="monetary" nolabel="1"/>
                                 <span>/ month</span>
                             </div>
                         </group>
@@ -366,6 +373,7 @@
             </xpath>
         </field>
     </record>
+
 
 
 </odoo>
