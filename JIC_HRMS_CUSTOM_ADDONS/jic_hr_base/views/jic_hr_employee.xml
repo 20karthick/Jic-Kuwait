@@ -143,6 +143,13 @@
             <xpath expr="//field[@name='age']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='work_permit_expiration_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//field[@name='permit_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
 
             <field name="passport_id" position="after">
                 <field name="passport_expiry_date"/>

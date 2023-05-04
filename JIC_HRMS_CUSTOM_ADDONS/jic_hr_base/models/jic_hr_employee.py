@@ -170,6 +170,7 @@ class HREmployee(models.Model):
 
     enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", compute='_compute_company')
     kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", compute='_compute_company')
+    visa_no = fields.Char('Visa Number (Article)', groups="hr.group_hr_user", tracking=True)
 
 
     def _compute_company(self):
@@ -212,3 +213,9 @@ class HREmployee(models.Model):
     def emp_id_get(self):
         emp_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
         return emp_id.id
+
+    @api.onchange('civil_expiry')
+    def onchange_civil_expiry_date(self):
+        for rec in self:
+            if rec.civil_expiry:
+                rec.visa_expire = rec.civil_expiry
