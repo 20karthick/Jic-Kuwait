@@ -17,7 +17,7 @@ class ProjectTask(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
 
-        if view_type == 'form' and not self.user_has_groups('project.group_project_manager'):
+        if view_type == 'form' and self.user_has_groups('project.group_project_user') and self.user_has_groups('employee_inherits.employee_project_admin'):
             doc = etree.XML(res['arch'], parser=None, base_url=None)
 
             # Fields to make readonly for project users only
@@ -30,6 +30,20 @@ class ProjectTask(models.Model):
                     modifiers['readonly'] = True
                     node.set("modifiers", json.dumps(modifiers))
 
-            res['arch'] = etree.tostring(doc)
+        else:
+            if view_type == 'form' and not self.user_has_groups('project.group_project_manager'):
+                doc = etree.XML(res['arch'], parser=None, base_url=None)
+
+                # Fields to make readonly for project users only
+                fields = ['project_id', 'user_ids', 'partner_id', 'tag_ids']
+
+                for field in fields:
+                    for node in doc.xpath("//field[@name='%s']" % field):
+                        node.set("readonly", "1")
+                        modifiers = json.loads(node.get("modifiers"))
+                        modifiers['readonly'] = True
+                        node.set("modifiers", json.dumps(modifiers))
+
+                res['arch'] = etree.tostring(doc)
         return res
 

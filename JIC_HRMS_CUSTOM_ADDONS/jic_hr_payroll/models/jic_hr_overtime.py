@@ -15,6 +15,7 @@ class HrOvertimeConf(models.Model):
             ("normal_ot", "Normal OT"),
             ("friday_ot", "Friday OT"),
             ("holiday_ot", "Holiday OT"),
+            ("sunday_ot", "Sunday OT"),
         ]
         , string="Overtime Type", default="normal_ot", required=True)
     department_id = fields.Many2one("hr.department", string="Department")
@@ -111,16 +112,25 @@ class HrOvertimeRequest(models.Model):
             for day, hours, leave in public_holidays:
                 if not leave.holiday_id:
                     holiday = True
-
             if holiday:
                 rec.overtime_type = 'holiday_ot'
-                rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_holiday").id
-            elif rec.overtime_date.weekday() == 4:
-                rec.overtime_type = 'friday_ot'
-                rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_friday").id
+                rec.rule_id = self.env['hr.salary.rule'].search([('company_id', '=', rec.company_id.id), ('code', '=', 'OTHOLIDAYIND')], limit=1)
+            elif rec.overtime_date.weekday() == 6:
+                rec.overtime_type = 'sunday_ot'
+                rec.rule_id = self.env['hr.salary.rule'].search([('company_id', '=', rec.company_id.id),('code', '=', 'OTSUNDAYIND')], limit=1)
             else:
                 rec.overtime_type = 'normal_ot'
-                rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_normal").id
+                rec.rule_id = self.env['hr.salary.rule'].search([('company_id', '=', rec.company_id.id), ('code', '=', 'OTNORMALIND')], limit=1)
+
+            # if holiday:
+            #     rec.overtime_type = 'holiday_ot'
+            #     rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_holiday").id
+            # elif rec.overtime_date.weekday() == 4:
+            #     rec.overtime_type = 'friday_ot'
+            #     rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_friday").id
+            # else:
+            #     rec.overtime_type = 'normal_ot'
+            #     rec.rule_id = self.env.ref("jic_hr_payroll.hr_rule_overtime_normal").id
 
     @api.depends('overtime_type', 'amount', 'overtime_date')
     def _compute_settlement_amount(self):
@@ -170,6 +180,7 @@ class HrOvertimeRequest(models.Model):
             ("normal_ot", "Normal OT"),
             ("friday_ot", "Friday OT"),
             ("holiday_ot", "Holiday OT"),
+            ("sunday_ot", "Sunday OT"),
         ]
         , string="Overtime Type", compute='_compute_salary_rule_and_ot_type', store=True)
     state = fields.Selection(

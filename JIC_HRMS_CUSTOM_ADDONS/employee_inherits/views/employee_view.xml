@@ -3,6 +3,9 @@
     <record id="employee_rbac" model="res.groups">
         <field name="name">Employee RBAC</field>
     </record>
+      <record id="employee_project_admin" model="res.groups">
+        <field name="name">Employee Project Admin</field>
+    </record>
 
      <record id="res_company_inherits_form" model="ir.ui.view">
         <field name="name">ResCompanyInherit</field>
@@ -20,37 +23,91 @@
         <field name="model">hr.contract</field>
         <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
         <field name="arch" type="xml">
+            <group name="salary" position="attributes">
+                <attribute name="string">Salary Components</attribute>
+            </group>
             <xpath expr="//group[@name='salary']" position="inside">
-                    <label for="misc_allowance"/>
-                    <div class="o_row">
+                    <label for="misc_allowance" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="misc_allowance" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="variable_inc"/>
-                    <div class="o_row">
+                    <label for="variable_inc" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="variable_inc" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="arrears"/>
-                    <div class="o_row">
+                    <label for="arrears" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="arrears" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="other_earnings"/>
-                    <div class="o_row">
+                    <label for="other_earnings" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="other_earnings" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="incentive"/>
-                    <div class="o_row">
+                    <label for="incentive" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="incentive" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="gmi_release"/>
-                    <div class="o_row">
+                    <label for="gmi_release" invisible="1"/>
+                    <div class="o_row" invisible="1">
                         <field name="gmi_release" widget="monetary" nolabel="1"/>
                         <span>/ month</span>
                     </div>
+                     <label for="conveyance_allowance"/>
+                    <div class="o_row">
+                        <field name="conveyance_allowance" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="child_education_allowance"/>
+                    <div class="o_row">
+                        <field name="child_education_allowance" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="fuel_allowance_reimbursement"/>
+                    <div class="o_row">
+                        <field name="fuel_allowance_reimbursement" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="special_allowance"/>
+                    <div class="o_row">
+                        <field name="special_allowance" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                <label for="gross_salary"/>
+                <div class="o_row">
+                    <field name="gross_salary" widget="monetary" nolabel="1"/>
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='allowances']" position="inside">
+                    <label for="wwf_employee" style="color:Red;"/>
+                    <div class="o_row">
+                        <field name="wwf_employee" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="esi_employee" style="color:Red;"/>
+                    <div class="o_row">
+                        <field name="esi_employee" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="pf_employee" style="color:Red;"/>
+                    <div class="o_row">
+                        <field name="pf_employee" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                 <label for="tds" style="color:Red;"/>
+                    <div class="o_row">
+                        <field name="tds" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                <label for="meal_coupon_allowance_deduction" style="color:Red;"/>
+                    <div class="o_row">
+                        <field name="meal_coupon_allowance_deduction" widget="monetary" nolabel="1"/>
+                        <span>/ month</span>
+                </div>
             </xpath>
         </field>
     </record>
@@ -147,21 +204,48 @@
         <field name="model">hr.attendance</field>
         <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
         <field name="arch" type="xml">
-             <field name="employee_id" position="after">
+             <field name="employee_id" position="before">
                 <field name="emp_code"/>
+            </field>
+            <field name="check_in" position="after">
+                <field name="check_in_date" invisible="1"/>
+                <field name="first_half_status"/>
+            </field>
+            <field name="check_out" position="after">
+<!--                <field name="check_out_date"/>-->
+                <field name="second_half_status"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="status"/>
+                <field name="remarks"/>
             </field>
             <field name="check_out" position="after">
                 <field name="worked_hours"/>
             </field>
         </field>
     </record>
+
       <record id="hr_attendance_view_inherits_tree" model="ir.ui.view">
         <field name="name">HrAttendanceList</field>
         <field name="model">hr.attendance</field>
         <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
         <field name="arch" type="xml">
-            <field name="employee_id" position="after">
+            <tree position="attributes">
+                 <attribute name="decoration-info">first_half_status == 'week_off' and second_half_status == 'week_off'</attribute>
+                 <attribute name="decoration-danger">first_half_status == 'absent' and second_half_status == 'absent'</attribute>
+            </tree>
+            <field name="employee_id" position="before">
                 <field name="emp_code"/>
+            </field>
+            <field name="check_in" position="after">
+                <field name="check_in_date"  invisible="1"/>
+                <field name="first_half_status"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="second_half_status"/>
+                <field name="status" invisible="1"/>
+                <field name="remarks"/>
+<!--                <button name="attendance_sent_mail" type="object" string="Send Mail" icon="fa-envelope" class="oe_link"/>-->
             </field>
         </field>
     </record>
@@ -202,5 +286,35 @@
                   name="Import Attendance Data"
                   parent="hr_attendance.menu_hr_attendance_settings"
                   action="action_import_attendance" sequence="100"/>
+
+
+      <menuitem id="project.menu_project_config" name="Configuration" parent="project.menu_main_pm"
+            sequence="100" groups="employee_inherits.employee_project_admin,project.group_project_manager"/>
+      <menuitem action="project.open_view_project_all_config" id="project.menu_projects_config"
+                name="Projects" parent="project.menu_project_config"
+                sequence="5"
+                groups="employee_inherits.employee_project_admin,project.group_project_manager"/>
+
+      <record id="act_hr_timesheet_entry_all_rbac_admin" model="ir.actions.act_window">
+        <field name="name">Time Sheets To Approve Employee</field>
+        <field name="res_model">hr.timesheet.entry</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{ "search_default_submitted_time_sheets":1}</field>
+        <field name="search_view_id" ref="hr_timesheet_approval.hr_timesheet_entry_search"/>
+    </record>
+      <menuitem id="timesheet_menu_activity_approval_my_rbac_admin"
+            groups="employee_inherits.employee_project_admin"
+            parent="hr_timesheet_approval.timesheet_menu_activity_main"
+            sequence="11"
+            action="act_hr_timesheet_entry_all_rbac_admin"/>
+
+      <record id="action_model_hr_attendance_inherit" model="ir.actions.server">
+        <field name="name">Employee attendance Creation</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+       <field name="binding_model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="state">code</field>
+        <field name="code">action = records.employee_leave_week_off()</field>
+    </record>
   </data>
 </odoo>

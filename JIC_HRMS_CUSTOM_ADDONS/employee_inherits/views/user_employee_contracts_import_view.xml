@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+      <record id="user_employee_contracts_form" model="ir.ui.view">
+        <field name="name">User Employee Contract Import</field>
+        <field name="model">user.employee.contracts.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="upload_file"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_submit" string="Import" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_user_employee_contracts">
+        <field name="name">User Employee Contract Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">user.employee.contracts.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+              <menuitem id="menu_user_employee_contracts_import"
+                  name="Import User Employee Contract Data"
+                  parent="base.menu_users"
+                  action="action_user_employee_contracts" sequence="200"/>
+
+
+  </data>
+</odoo>

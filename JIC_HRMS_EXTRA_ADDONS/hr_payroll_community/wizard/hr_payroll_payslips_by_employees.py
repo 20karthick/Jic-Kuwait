@@ -37,4 +37,6 @@ class HrPayslipEmployees(models.TransientModel):
             }
             payslips += self.env['hr.payslip'].create(res)
         payslips.compute_sheet()
+        for rec in payslips:
+            rec.onchange_employee()
         return {'type': 'ir.actions.act_window_close'}

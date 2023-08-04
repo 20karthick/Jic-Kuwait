@@ -7,10 +7,10 @@
         <field name="arch" type="xml">
             <tree string="Job Description">
                 <field name="employee_id"/>
-                <field name="skill_type_id"/>
-                <field name="skill_id"/>
-                <field name="skill_level_id"/>
-                <field name="level_progress"/>
+                <field name="job_title"/>
+                <field name="company_id"/>
+<!--                <field name="skill_level_id"/>-->
+<!--                <field name="level_progress"/>-->
             </tree>
         </field>
     </record>
@@ -20,17 +20,62 @@
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <form string="Description">
-                <group>
+                <header>
+                    <button name="action_submit" type="object" string="Submit" states="draft" class="oe_highlight"/>
+                    <button name="action_hr_manger" type="object" string="Approve" states="hr_manger" class="oe_highlight"/>
+                    <button name="action_dep_head" type="object" string="Approve" states="dep_head" class="oe_highlight"/>
+                    <button name="action_refuse" type="object" string="Refuse" states="hr_manger,dep_head" class="oe_highlight"/>
+                    <button name="action_draft" type="object" string="Reset To Draft" states="refuse,hr_manger,dep_head" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,hr_manger,dep_head,approve,refuse"/>
+                </header>
+                <sheet>
                     <group>
-                        <field name="employee_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
-                        <field name="skill_type_id"/>
-                        <field name="skill_id"/>
+                        <group>
+                            <field name="job_title" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="company_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                            <field name="dds" options="{'no_edit': True, 'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="type_of_employment" widget="radio" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="employee_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                            <field name="location" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="to_approve" options="{'no_edit': True, 'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="department_head" options="{'no_edit': True, 'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="document" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="skill_level_id"/>
-                        <field name="level_progress"/>
-                    </group>
-                </group>
+                    <label for="job_summary" string="Job Summary"/>
+                    <field name="job_summary" attrs="{'readonly': [('state','=','approve')]}"/>
+                    <label for="dr" string="Duties and Responsibilities"/>
+                    <field name="dr" attrs="{'readonly': [('state','=','approve')]}"/>
+                    <label for="edu_work_skill" string="Education / Work Experience / Skill Requirements"/>
+                    <field name="edu_work_skill" attrs="{'readonly': [('state','=','approve')]}"/>
+                    <label for="int_ext_com" string="Internal and External Communications"/>
+                    <field name="int_ext_com" attrs="{'readonly': [('state','=','approve')]}"/>
+                    <label for="phy_req" string="Physical Requirements"/>
+                    <field name="phy_req" attrs="{'readonly': [('state','=','approve')]}"/>
+                    <table style='width:100%;' border='1'>
+                        <tr>
+                          <td style='width:20%; text-align: center;'></td>
+                          <td style='width:40%; text-align: center;'><strong>Signature</strong></td>
+                          <td style='width:40%;text-align: center;'><strong>Date</strong></td>
+                        </tr>
+                        <tr>
+                          <td style='width:20%;height:100px; text-align: center;'><strong>Department Head</strong></td>
+                          <td style='width:40%;height:100px; text-align: center;'><field name="dig_sign_department_head" attrs="{'required':[('state','=','dep_head')], 'readonly': [('state','!=','dep_head')]}" widget="signature"/></td>
+                          <td style='width:40%;height:100px; text-align: center;'><field name="department_head_signature_date" attrs="{'required':[('state','=','dep_head')], 'readonly': [('state','!=','dep_head')]}"/></td>
+                        </tr>
+                        <tr>
+                          <td style='width:20%;height:100px; text-align: center;'><strong>Approved by HR Manager</strong></td>
+                          <td style='width:40%;height:100px; text-align: center;'><field name="dig_sign_hr_manager" attrs="{'required':[('state','=','hr_manger')], 'readonly': [('state','!=','hr_manger')]}" widget="signature"/></td>
+                          <td style='width:40%;height:100px; text-align: center;'><field name="hr_manager_signature_date" attrs="{'required':[('state','=','hr_manger')], 'readonly': [('state','!=','hr_manger')]}"/></td>
+                        </tr>
+                 </table>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

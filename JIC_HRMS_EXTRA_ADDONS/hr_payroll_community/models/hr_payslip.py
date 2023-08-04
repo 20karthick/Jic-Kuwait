@@ -171,8 +171,75 @@ class HrPayslip(models.Model):
             payslip.write({'line_ids': lines, 'number': number})
         return True
 
+    # @api.model
+    # def get_worked_day_lines(self, contracts, date_from, date_to):
+    #
+    #     """
+    #     @param contract: Browse record of contracts
+    #     @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
+    #     """
+    #     res = []
+    #     # fill only if the contract as a working schedule linked
+    #     for contract in contracts.filtered(lambda contract: contract.resource_calendar_id):
+    #
+    #         # Updated by JIC Start
+    #         if contract.state not in ['open']:
+    #             continue
+    #
+    #         day_from = datetime.combine(fields.Date.from_string(date_from), time.min)
+    #         day_to = datetime.combine(fields.Date.from_string(date_to), time.max)
+    #
+    #         # Updated by JIC Start
+    #         if contract.date_start and contract.date_start >= date_from:
+    #             day_from = datetime.combine(fields.Date.from_string(contract.date_start), time.min)
+    #         if contract.date_end and contract.date_end <= date_to:
+    #             day_to = datetime.combine(fields.Date.from_string(contract.date_end), time.min)
+    #         # Updated by JIC Ends
+    #
+    #         # compute leave days
+    #         leaves = {}
+    #         calendar = contract.resource_calendar_id
+    #         tz = timezone(calendar.tz)
+    #         day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to,
+    #                                                                calendar=contract.resource_calendar_id)
+    #         for day, hours, leave in day_leave_intervals:
+    #             holiday = leave.holiday_id
+    #             current_leave_struct = leaves.setdefault(holiday.holiday_status_id, {
+    #                 'name': holiday.holiday_status_id.name or _('Global Leaves'),
+    #                 'sequence': 5,
+    #                 'code': holiday.holiday_status_id.code or 'GLOBAL',
+    #                 'number_of_days': 0.0,
+    #                 'number_of_hours': 0.0,
+    #                 'contract_id': contract.id,
+    #             })
+    #             current_leave_struct['number_of_hours'] += hours
+    #             work_hours = calendar.get_work_hours_count(
+    #                 tz.localize(datetime.combine(day, time.min)),
+    #                 tz.localize(datetime.combine(day, time.max)),
+    #                 compute_leaves=False,
+    #             )
+    #             if work_hours:
+    #                 current_leave_struct['number_of_days'] += hours / work_hours
+    #
+    #         # compute worked days
+    #         work_data = contract.employee_id.get_work_days_data(day_from, day_to,
+    #                                                             calendar=contract.resource_calendar_id)
+    #         attendances = {
+    #             'name': _("Normal Working Days paid at 100%"),
+    #             'sequence': 1,
+    #             'code': 'WORK100',
+    #             'number_of_days': work_data['days'],
+    #             'number_of_hours': work_data['hours'],
+    #             'contract_id': contract.id,
+    #         }
+    #
+    #         res.append(attendances)
+    #         res.extend(leaves.values())
+    #     return res
+
     @api.model
     def get_worked_day_lines(self, contracts, date_from, date_to):
+        print("222222222222222222222222222222222222222222222222222222222",date_from,date_to)
 
         """
         @param contract: Browse record of contracts
@@ -200,8 +267,15 @@ class HrPayslip(models.Model):
             leaves = {}
             calendar = contract.resource_calendar_id
             tz = timezone(calendar.tz)
-            day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to,
+            date_from_start = date_from + relativedelta(months=-1, day=26)
+            date_to_end = date_to + relativedelta(day=25)
+            day_from_start = datetime.combine(fields.Date.from_string(date_from_start), time.min)
+            day_to_end = datetime.combine(fields.Date.from_string(date_to_end), time.max)
+            day_leave_intervals = contract.employee_id.list_leaves(day_from_start, day_to_end,
                                                                    calendar=contract.resource_calendar_id)
+            days = []
+            days_count = 0.0
+            hours1 = 0.0
             for day, hours, leave in day_leave_intervals:
                 holiday = leave.holiday_id
                 current_leave_struct = leaves.setdefault(holiday.holiday_status_id, {
@@ -212,24 +286,53 @@ class HrPayslip(models.Model):
                     'number_of_hours': 0.0,
                     'contract_id': contract.id,
                 })
+
                 current_leave_struct['number_of_hours'] += hours
                 work_hours = calendar.get_work_hours_count(
                     tz.localize(datetime.combine(day, time.min)),
                     tz.localize(datetime.combine(day, time.max)),
                     compute_leaves=False,
                 )
+                print("::::::::[[[[[[[[[[[[[[",day)
+                # hours1 = current_leave_struct['number_of_hours']
+                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!", work_hours)
                 if work_hours:
                     current_leave_struct['number_of_days'] += hours / work_hours
+                    # days = current_leave_struct['number_of_days']
+                if day < date_from:
+                    print("%%%%%%%%%%%%%%%%%%%%%88888888888",day,hours)
+                    days.append(day)
+                    hours1 += hours
+            print("2@@@@@@@@@@@@@@", len([*set(days)]), hours1)
+
 
             # compute worked days
             work_data = contract.employee_id.get_work_days_data(day_from, day_to,
                                                                 calendar=contract.resource_calendar_id)
+            # days = 0.0
+            # hours1 = 0.0
+            # if self.worked_days_line_ids:
+            #     for rec in self.worked_days_line_ids:
+            #         if rec.code == 'UNPAID':
+            #             days += rec.number_of_days
+            #             hours1 += rec.number_of_hours
+            print("HHHHHHHHHHHHHHHHHHHH", work_data['days'], days, hours1)
+            dates = [(i, days.count(i)) for i in days]
+            leave_dates = [*set(dates)]
+            print("datesdatesdatesdates",[*set(dates)])
+            for ld in leave_dates:
+                if ld[1] == 1:
+                    days_count += 0.5
+                if ld[1] == 2:
+                    days_count += 1
+
+
             attendances = {
                 'name': _("Normal Working Days paid at 100%"),
                 'sequence': 1,
                 'code': 'WORK100',
-                'number_of_days': work_data['days'],
-                'number_of_hours': work_data['hours'],
+                'number_of_days': work_data['days'] - days_count,
+                'number_of_hours': work_data['hours'] - hours1,
                 'contract_id': contract.id,
             }
 
@@ -464,6 +567,7 @@ class HrPayslip(models.Model):
         # computation of the salary input
         contracts = self.env['hr.contract'].browse(contract_ids)
         worked_days_line_ids = self.get_worked_day_lines(contracts, date_from, date_to)
+
         input_line_ids = self.get_inputs(contracts, date_from, date_to)
         res['value'].update({
             'worked_days_line_ids': worked_days_line_ids,
@@ -473,6 +577,7 @@ class HrPayslip(models.Model):
 
     @api.onchange('employee_id', 'date_from', 'date_to')
     def onchange_employee(self):
+        print("LLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
         if (not self.employee_id) or (not self.date_from) or (not self.date_to):
             return
@@ -642,6 +747,7 @@ class ResourceMixin(models.AbstractModel):
             Returns a dict {'days': n, 'hours': h} containing the
             quantity of working time expressed as days and as hours.
         """
+        print("0000000000000000))))))))))))))))))",from_datetime,to_datetime)
         resource = self.resource_id
         calendar = calendar or self.resource_calendar_id
 
@@ -659,21 +765,24 @@ class ResourceMixin(models.AbstractModel):
         day_total = defaultdict(float)
         for start, stop, meta in intervals[resource.id]:
             day_total[start.date()] += (stop - start).total_seconds() / 3600
+        print("___________________________________________-", day_total)
 
         # actual hours per day
         if compute_leaves:
             intervals = calendar._work_intervals_batch(from_datetime, to_datetime, resource, domain)
         else:
+            print("BBBBBBBBBBB")
             intervals = calendar._attendance_intervals_batch(from_datetime, to_datetime, resource)
         day_hours = defaultdict(float)
         for start, stop, meta in intervals[resource.id]:
             day_hours[start.date()] += (stop - start).total_seconds() / 3600
-
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^", day_hours)
         # compute number of days as quarters
         days = sum(
             float_utils.round(ROUNDING_FACTOR * day_hours[day] / day_total[day]) / ROUNDING_FACTOR
             for day in day_hours
         )
+        print("KKKKKKKKKKKKKKKKKKKKKKKKKK",days)
         return {
             'days': days,
             'hours': sum(day_hours.values()),

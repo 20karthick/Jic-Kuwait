@@ -116,7 +116,7 @@ class HREmployee(models.Model):
     personal_email_id = fields.Char(string="Personal Email ID")
     age = fields.Float(string="Age")
 
-    wage = fields.Float(string="Wage", compute='_compute_employee_salary')
+    wage = fields.Float(string="Basic", compute='_compute_employee_salary')
     hra = fields.Float(string='HRA', help="House rent allowance.", compute='_compute_employee_salary')
     travel_allowance = fields.Float(string="Travel Allowance", help="Travel allowance",
                                     compute='_compute_employee_salary')
@@ -147,6 +147,7 @@ class HREmployee(models.Model):
     city = fields.Char('City')
     state_id = fields.Many2one("res.country.state", string='State')
     country_id = fields.Many2one('res.country', string='Country')
+    citizenship_country_id = fields.Many2one('res.country', string='Country')
 
     aadhar_number = fields.Char(string="Aadhar Number")
     pan = fields.Char(string="PAN Number")
@@ -171,7 +172,9 @@ class HREmployee(models.Model):
     enmfi = fields.Boolean(string="Emp Non Mandatory Fields Hide", help="Non mandatory fields hide for indian company.", compute='_compute_company')
     kuwait_company = fields.Boolean(string="Kuwait Company", help="Non mandatory fields hide for Kuwait company.", compute='_compute_company')
     visa_no = fields.Char('Visa Number (Article)', groups="hr.group_hr_user", tracking=True)
-
+    equipment_count = fields.Integer('Assets', compute='_compute_equipment_count')
+    job_des_id = fields.Many2one('job.description', string='Job Description')
+    employee_acceptance = fields.Binary(string='Employee Signature')
 
     def _compute_company(self):
         if self.company_id:

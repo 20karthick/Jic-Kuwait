@@ -62,7 +62,7 @@
                         <field name="payslip_id" readonly="1"/>
                         <field name="payslip_status" readonly="1"/>
                         <field name="settlement_amount" widget="monetary"/>
-                        <field name="company_id" invisible="1"/>
+                        <field name="company_id"/>
                         <field name="company_currency_id" invisible="1"/>
                     </group>
                 </sheet>

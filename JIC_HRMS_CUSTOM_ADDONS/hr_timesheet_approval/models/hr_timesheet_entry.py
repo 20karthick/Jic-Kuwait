@@ -246,9 +246,10 @@ class HrTimesheetEntry(models.Model):
 
     def write(self, values):
         # If it's a basic user then check if the timesheet is his own.
-        if not (self.user_has_groups('hr_timesheet.group_hr_timesheet_approver') or self.env.su) and\
-                any(self.env.user.id != analytic_line.user_id.id for analytic_line in self):
-            raise AccessError(_("You cannot access time sheets that are not yours."))
+        if not self.user_has_groups('hr_timesheet.group_hr_timesheet_user') and not self.user_has_groups('employee_inherits.employee_project_admin'):
+            if not (self.user_has_groups('hr_timesheet.group_hr_timesheet_approver') or self.env.su) and\
+                    any(self.env.user.id != analytic_line.user_id.id for analytic_line in self):
+                raise AccessError(_("You cannot access time sheets that are not yours."))
 
         if 'name' in values and not values.get('name'):
             values['name'] = '/'

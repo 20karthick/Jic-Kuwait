@@ -5,6 +5,7 @@ import base64
 from itertools import groupby
 from datetime import datetime
 import time
+from dateutil.relativedelta import relativedelta
 
 
 class HrPayslip(models.Model):
@@ -153,7 +154,7 @@ class HrPayslip(models.Model):
         dummy_deductions = 0
 
         total_days = sum([a.number_of_days for a in self.worked_days_line_ids]) or 0
-        loss_of_pay_days = sum([a.number_of_days for a in self.worked_days_line_ids if a.code in ['UNPAID','SANDWICH','DELAYED']]) or 0
+        loss_of_pay_days = sum([a.number_of_days for a in self.worked_days_line_ids if a.code in ['UNPAID', 'SANDWICH', 'DELAYED', 'UNPAIDHALF']]) or 0
         paid_days = total_days - loss_of_pay_days
 
         category_ids = self.line_ids
@@ -181,7 +182,7 @@ class HrPayslip(models.Model):
             "employee_code": emp_id.emp_code,
             "total_days": sum([a.number_of_days for a in self.worked_days_line_ids]) or 0,
             "designation": emp_id.job_id.name,
-            "loss_of_pay": sum([a.number_of_days for a in self.worked_days_line_ids if a.code in ['UNPAID','SANDWICH','DELAYED']]) or 0,
+            "loss_of_pay": sum([a.number_of_days for a in self.worked_days_line_ids if a.code in ['UNPAID', 'SANDWICH', 'DELAYED', 'UNPAIDHALF']]) or 0,
             "department": contract_id.department_id.name,
             "paid_days": paid_days or 0,
             "earned_leave": 0, # Todo
@@ -338,3 +339,35 @@ class HrPayslip(models.Model):
     def button_refresh(self):
         # Todo Remove this method
         return True
+
+
+# Changed By karthick
+
+class ResourceCalendar(models.Model):
+    """ Calendar model for a resource. It has
+
+     - attendance_ids: list of resource.calendar.attendance that are a working
+                       interval in a given weekday.
+     - leave_ids: list of leaves linked to this calendar. A leave can be general
+                  or linked to a specific resource, depending on its resource_id.
+
+    All methods in this class use intervals. An interval is a tuple holding
+    (begin_datetime, end_datetime). A list of intervals is therefore a list of
+    tuples, holding several intervals of work or leaves. """
+    _inherit = "resource.calendar"
+    _description = "Resource Working Time"
+
+    def _work_intervals_batch(self, start_dt, end_dt, resources=None, domain=None, tz=None):
+        """ Return the effective work intervals between the given datetimes. """
+        if not resources:
+            resources = self.env['resource.resource']
+            resources_list = [resources]
+        else:
+            resources_list = list(resources)
+        date_from_start = start_dt + relativedelta(months=-1, day=26)
+        date_to_end = end_dt + relativedelta(day=25)
+        attendance_intervals = self._attendance_intervals_batch(start_dt, end_dt, resources, tz=tz)
+        leave_intervals = self._leave_intervals_batch(date_from_start, date_to_end, resources, domain, tz=tz)
+        return {
+            r.id: (attendance_intervals[r.id] - leave_intervals[r.id]) for r in resources_list
+        }

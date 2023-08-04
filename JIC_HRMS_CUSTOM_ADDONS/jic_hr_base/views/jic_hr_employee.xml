@@ -150,7 +150,12 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
 
-
+            <xpath expr="//page[@name='personal_information']/group/group[2]/field[@name='country_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="passport_id" position="before">
+                <field name="citizenship_country_id"/>
+            </field>
             <field name="passport_id" position="after">
                 <field name="passport_expiry_date"/>
                 <field name="first_name_passport"/>
@@ -294,13 +299,19 @@
                     </group>
                 </page>
             </notebook>
+              <xpath expr="//page[@name='public']" position="before">
+                   <page string="Job Description" name="information">
+                       <group>
+                           <field name="job_des_id" domain="[('state', '=', 'approve')]" options="{'no_create':True}"></field>
+                           <field name="employee_acceptance" widget="signature"></field>
+                       </group>
+                   </page>
+              </xpath>
               <notebook position="inside">
-                   <page string="Leave Information" name="information">
+                   <page string="Leave Information" name="information" invisible="1">
                        <field name="employee_leave_details_ids" readonly="1" options="{'no_open': True,'no_create':True}"></field>
                    </page>
-
               </notebook>
-
               <xpath expr="//field[@name='bank_account_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>

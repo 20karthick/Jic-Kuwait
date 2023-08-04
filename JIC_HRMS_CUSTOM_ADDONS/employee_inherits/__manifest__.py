@@ -13,17 +13,24 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base', 'web', 'project', 'hr_attendance', 'hr', 'auth_signup', 'mail', 'hr_holidays', 'hr_skills'],
+    'depends': ['base', 'web', 'project', 'hr_attendance','hr_timesheet_approval', 'hr', 'auth_signup', 'mail', 'hr_holidays', 'hr_skills','hr_payroll_community'],
     'live_test_url': '',
     'data': ['views/employee_view.xml',
              'views/mail_template.xml',
              'views/header_footer.xml',
+             'views/employee_leave_creation_view.xml',
+             'views/employee_leave_allocation_view.xml',
+             'views/employee_mail_template.xml',
+             'views/user_employee_contracts_import_view.xml',
+             'views/cron.xml',
              'security/employee_security.xml',
-             'security/ir.model.access.csv'],
+             'security/ir.model.access.csv',
+             'data/attendance_rules.xml'],
 
     'assets': {
         'web.assets_backend': [
             '/employee_inherits/static/src/js/action.js',
+            # '/employee_inherits/static/src/js/project_js.js',
         ],
         'web.assets_qweb': [
 
