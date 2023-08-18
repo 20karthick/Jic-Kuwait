@@ -1,0 +1,197 @@
+<odoo>
+  <data>
+      <record id="view_employee_leave_application_tree" model="ir.ui.view">
+        <field name="name">Employee Leave Application Tree</field>
+        <field name="model">employee.leave.application</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="job_title"/>
+                <field name="company_id"/>
+                <field name="department_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employee_leave_application_form" model="ir.ui.view">
+        <field name="name">Employee Leave Application Form</field>
+        <field name="model">employee.leave.application</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Submit" class="btn-primary" type="object" name="leave_submit" states="draft"
+                                attrs="{'invisible': [('state','not in',('draft'))]}"/>
+                        <button string="Approve" class="btn-primary" type="object" name="approve_by_hr" states="hr_approve"
+                                attrs="{'invisible': [('state','not in',('hr_approve'))]}"/>
+                        <button  string="Approve" type="object"
+                                name="approve_by_manager" states="manager_approve" attrs="{'invisible': [('state','not in',('manager_approve'))]}"/>
+                        <button name="action_draft" type="object" string="Reset To Draft" states="hr_approve,manager_approve" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,hr_approve,manager_approve,approved"/>
+                    </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_open':True,'no_create': True}" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                            <field name="job_title"/>
+                            <field name="company_id" options="{'no_open':True,'no_create': True}"/>
+                            <field name="manager_id" options="{'no_open':True,'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="emp_code"/>
+                            <field name="date_of_joining"/>
+                            <field name="hr_id" attrs="{'readonly': [('state','not in',('draft'))]}" options="{'no_open':True,'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="leave_category" string="Leave Category" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                        <field name="other_leave" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                        <field name="reason_for_leave" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="from_date" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                            <field name="to_date" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                        </group>
+                        <group>
+                            <field name="return_date" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="leave_payment_mode" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('state','=','approved')]}"/>
+                    </group>
+                    <table style='width:100%;' border='1'>
+                        <tr>
+                          <td style='width:20%; text-align: center;'></td>
+                          <td style='width:40%; text-align: center;'><strong>Signature</strong></td>
+                          <td style='width:40%;text-align: center;'><strong>Date</strong></td>
+                        </tr>
+                        <tr>
+                          <td style='width:20%;height:25px; text-align: center;'><strong>Employee’s Signature</strong></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="employee_signature" widget="signature" attrs="{'readonly': [('state','not in',('draft'))]}"/></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="emp_sig_date" attrs="{'readonly': [('state','not in',('draft'))]}"/></td>
+                        </tr>
+                        <tr>
+                          <td style='width:20%;height:25px; text-align: center;'><strong>Direct Manager’s Name &#38; Signature</strong></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="director_signature" widget="signature" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="dir_sig_date" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                        <tr>
+                          <td style='width:20%;height:25px; text-align: center;'><strong>HoD Name &#38; Signature</strong></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="hod_signature" attrs="{'readonly': [('state','=','approved')]}" widget="signature"/></td>
+                          <td style='width:40%;height:25px; text-align: center;'><field name="hod_sig_date" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                    </table>
+                    <group>
+                     <table style='width:100%;' border='1'>
+                            <td style="border-bottom: 5px solid; text-align: center;border-top:hidden;border-left:hidden;border-right:hidden">
+                                <strong>*In Case of Advance Pay, Approved Leave Form should reach the HR Dept. 30 days before the Leave start date</strong>
+                            </td>
+                     </table>
+                    </group>
+                     <table style='width:100%;' border='1'>
+                          <td style="text-align: center;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                                <h2>FOR HRD USE ONLY</h2>
+                            </td>
+                     </table>
+                    <group>
+                        <group>
+                            <field name="received_on" attrs="{'readonly': [('state','=','approved')]}"/>
+                        </group>
+                        <group>
+                            <field name="monthly_basic_salary" attrs="{'readonly': [('state','=','approved')]}"/>
+                        </group>
+                    </group>
+                    <table style="width:100%;" border="2">
+                         <tr>
+                            <th style='width:40%; text-align: center;'><strong>Leave Record</strong></th>
+                            <th style='width:60%; text-align: center;'><strong>Leave Payment</strong></th>
+                        </tr>
+                    </table>
+                    <table style='width:100%;' border='2'>
+                        <tr>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>Current Leave Balance</strong></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="clb" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>Basic Salary Days</strong></td>
+                            <td style='width:20%;height:50px; text-align: center;'><field name="bsd" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="bsd_salary"/></td>
+                        </tr>
+                       <tr>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>No.of Leave Days used</strong></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="nldu" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>Leave Salary Days</strong></td>
+                            <td style='width:20%;height:50px; text-align: center;'><field name="lsd" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="lsd_salary" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                        <tr>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>Current Balance</strong></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="cb" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:30%;height:50px; text-align: center;'><strong>Other Payments</strong></td>
+                            <td style='width:20%;height:50px; text-align: center;'><field name="other_payment" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:10%;height:50px; text-align: center;'><field name="other_salary" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                    </table>
+                    <td>
+                    </td>
+                     <table style="width:100%;">
+                        <tr>
+                            <td style='width:20%;height:50px; text-align: center; center;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden'><strong>Other Payments Details:</strong></td>
+                            <td style='width:80%;height:50px; text-align: left; center;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden'><field name="other_payment_details"/></td>
+                        </tr>
+                    </table>
+                    <table style='width:100%;' border='1'>
+                            <td style="border-bottom: 5px solid; text-align: center;border-top:hidden;border-left:hidden;border-right:hidden">
+                            </td>
+                     </table>
+                     <td style='height:30px;'>
+                    </td>
+                    <table style="width:100%;" border="2">
+                         <tr>
+                            <th style='width:50%; text-align: center;'><strong>HR Approvals</strong></th>
+                            <th style='width:50%; text-align: center;'><strong>Finance Approvals</strong></th>
+                        </tr>
+                    </table>
+                    <table style='width:100%;' border='2'>
+                        <tr>
+                            <td style='width:25%;height:50px; text-align: center;'><strong>HR Executive</strong></td>
+                            <td style='width:25%;height:50px; text-align: center;'><field name="hr_executive" widget="signature" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:25%;height:50px; text-align: center;'><strong>Asst. Finance Manager</strong></td>
+                            <td style='width:25%;height:50px; text-align: center;'><field name="af_manager" widget="signature" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                       <tr>
+                            <td style='width:25%;height:50px; text-align: center;'><strong>HR Manager</strong></td>
+                            <td style='width:25%;height:50px; text-align: center;'><field name="hr_manager" widget="signature" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                            <td style='width:25%;height:50px; text-align: center;'><strong>CFO</strong></td>
+                            <td style='width:25%;height:50px; text-align: center;'><field name="cfo" widget="signature" attrs="{'readonly': [('state','=','approved')]}"/></td>
+                        </tr>
+                    </table>
+                    <td style='height:30px;'></td>
+                    <table style='width:100%;' border='2'>
+                        <tr>
+                            <td style='width:33%;height:50px; text-align: left;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden'><strong>IC/HRMS/2023</strong></td>
+                            <td style='width:33%;height:50px; text-align: center;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden'><strong>Apr 2023</strong></td>
+                            <td style='width:33%;height:50px; text-align: right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden'><strong>Rev.: Apr2023</strong></td>
+                        </tr>
+                   </table>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="actions_employee_leave_application" model="ir.actions.act_window">
+        <field name="name">Employee Leave Application</field>
+        <field name="res_model">employee.leave.application</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new Leave Application.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_employee_leave_application"
+              name="Leave Application"
+              sequence="50"
+              parent="jic_hr_payroll.menu_hr_payslip_input_main"
+              action="actions_employee_leave_application"/>
+  </data>
+</odoo>

@@ -14,14 +14,15 @@ class JobDescription(models.Model):
     def _default_employee(self):
         return self.env.user.employee_id
 
-    employee_id = fields.Many2one('hr.employee', required=True,  string="Created By", default=_default_employee, readonly=True, ondelete='cascade')
+    employee_id = fields.Many2one('hr.employee', required=True,  string="Created By", default=_default_employee, ondelete='cascade')
     job_title = fields.Char(string="Job Title", required=True, tracking=True)
-    company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company, readonly=True, tracking=True)
+    company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company, tracking=True)
     dds = fields.Many2one('hr.department', string="Division / Department / Section", ondelete='cascade', tracking=True)
     location = fields.Char(string="Location", tracking=True)
     type_of_employment = fields.Selection([('fulltime', 'Full-time'), ('freelancing', 'Freelancing'), ('gigworking', 'Gig Working')], default='fulltime', string="Type of Employment", tracking=True)
     to_approve = fields.Many2one('hr.employee', required=True, string="Approved by HR Manager", ondelete='cascade')
     department_head = fields.Many2one('hr.employee', required=True, string="Department Head", ondelete='cascade')
+    report_to = fields.Char(string='Report To')
     job_summary = fields.Text(string="Job Summary", tracking=True)
     dr = fields.Text(string="Duties and Responsibilities", tracking=True)
     edu_work_skill = fields.Text(string="Education / Work Experience / Skill Requirements", tracking=True)
@@ -43,6 +44,14 @@ class JobDescription(models.Model):
     # skill_level_id = fields.Many2one('hr.skill.level', string="Skill Level", required=True)
     # skill_type_id = fields.Many2one('hr.skill.type', string="Skill Type", required=True)
     # level_progress = fields.Integer(related='skill_level_id.level_progress')
+
+
+    def unlink(self):
+        for rec in self:
+            if rec.state != 'draft':
+                raise ValidationError(_("A record can only be deleted in draft state."))
+        return super(EmployeeLeaveApplication, self).unlink()
+
     def action_submit(self):
         for rec in self:
             if self.env.user.employee_id == rec.employee_id:
