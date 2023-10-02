@@ -117,7 +117,7 @@ class DTwelveDepartment(models.Model):
     def firstchar(self):
         for f in self:
             if f.name:
-                f.first_char = f.name.split('.')[:1][0].strip()[:2]
+                f.first_char = f.name.split('.')[:1][0].strip()[:3]
                 f.display = f.name.split('.', 1)[1].strip()[:70]
 
 
