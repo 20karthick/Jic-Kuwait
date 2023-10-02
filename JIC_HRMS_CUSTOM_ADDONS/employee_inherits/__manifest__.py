@@ -24,6 +24,7 @@
              'views/user_employee_contracts_import_view.xml',
              'views/cron.xml',
              'views/employee_leave_application_view.xml',
+             'views/d12_formula_views.xml',
              'security/employee_security.xml',
              'security/ir.model.access.csv',
              'data/attendance_rules.xml'],

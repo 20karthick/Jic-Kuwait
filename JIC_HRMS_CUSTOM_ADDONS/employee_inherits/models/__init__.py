@@ -4,3 +4,4 @@ from . import employee_leave_allocation
 from . import employee_mail_template
 from . import user_employee_contracts_import
 from . import employee_leave_application
+from . import d12_formula

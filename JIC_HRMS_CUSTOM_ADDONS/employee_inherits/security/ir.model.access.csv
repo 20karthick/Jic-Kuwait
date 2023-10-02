@@ -6,3 +6,5 @@ access_employee_leave_allocation,employee.leave.allocation,model_employee_leave_
 access_employee_leave_application,employee.leave.application,model_employee_leave_application,base.group_user,1,1,1,1
 access_project_project_rbac_admin,project.project,project.model_project_project,employee_inherits.employee_project_admin,1,1,1,1
 access_user_employee_contracts_import,user.employee.contracts.import,model_user_employee_contracts_import,base.group_user,1,1,1,0
+access_user_d_twelve_department,d.twelve.department,model_d_twelve_department,hr.group_hr_manager,1,1,1,1
+access_user_employee_rbac_d_twelve_department,d.twelve.department,model_d_twelve_department,employee_inherits.employee_rbac,1,1,0,0

@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+<!--      <record id="d_twelve_formula_search" model="ir.ui.view">-->
+<!--        <field name="name">ir.actions.actions.search</field>-->
+<!--        <field name="model">d.twelve.formula</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Search">-->
+<!--                <searchpanel>-->
+<!--                    <field name="department_id" icon="fa-building"/>-->
+<!--                </searchpanel>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--      <record id="view_d_twelve_formula_tree" model="ir.ui.view">-->
+<!--        <field name="name">d.twelve.formula.tree</field>-->
+<!--        <field name="model">d.twelve.formula</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree>-->
+<!--                <field name="name"/>-->
+<!--                <field name="department_id"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="view_d_twelve_formula_form" model="ir.ui.view">-->
+<!--        <field name="name">d.twelve.formula.form</field>-->
+<!--        <field name="model">d.twelve.formula</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="department_id"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--      <record id="hr_kanban_view_d_twelve_formula" model="ir.ui.view">-->
+<!--           <field name="name">d.twelve.formula.kanban</field>-->
+<!--           <field name="model">d.twelve.formula</field>-->
+<!--           <field name="priority">10</field>-->
+<!--           <field name="arch" type="xml">-->
+<!--               <kanban class="o_d_twelve_formula_kanban">-->
+<!--                   <field name="name"/>-->
+<!--                   <field name="department_id"/>-->
+<!--                    <templates>-->
+<!--                        <t t-name="kanban-box">-->
+<!--                            <div t-attf-class="oe_kanban_global_click">-->
+<!--&lt;!&ndash;                                <div class="o_kanban_image">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <img alt="Avatar" t-att-src="kanban_image('res.partners', 'image_medium',record.id.raw_value)"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                                <div class="oe_kanban_details">-->
+<!--                                    <strong class="o_kanban_record_title">-->
+<!--                                    <field name="name"/>-->
+<!--                                    </strong>-->
+<!--                                <div t-if="record.department_id.value">-->
+<!--                                        <t t-esc="record.department_id.value"/>-->
+<!--                                </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                    </templates>-->
+<!--               </kanban>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--    <record id="actions_d_twelve_formula" model="ir.actions.act_window">-->
+<!--        <field name="name">D12 Formula</field>-->
+<!--        <field name="res_model">d.twelve.formula</field>-->
+<!--        <field name="view_mode">kanban,tree,form</field>-->
+<!--        <field name="help" type="html">-->
+<!--            <p class="oe_view_nocontent_create">-->
+<!--                Click here to create a new D12 Formula.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+     <menuitem id="menu_d_twelve"
+              name="D12 Formula"
+              parent="hr.menu_hr_root"/>
+
+      <!--    <menuitem id="menu_d_twelve_formula"-->
+      <!--              name="D12 Formula"-->
+      <!--              parent="menu_d_twelve"-->
+      <!--              action="actions_d_twelve_formula"/>-->
+
+    <record id="view_d_twelve_department_search" model="ir.ui.view">
+        <field name="name">d.twelve.department.search</field>
+        <field name="model">d.twelve.department</field>
+        <field name="arch" type="xml">
+             <search string="Search">
+                <searchpanel>
+                    <field name="parent_department_id" icon="fa-building"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+      <record id="view_d_twelve_department_tree" model="ir.ui.view">
+        <field name="name">d.twelve.department.tree</field>
+        <field name="model">d.twelve.department</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="parent_department_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_d_twelve_department_form" model="ir.ui.view">
+        <field name="name">d.twelve.department.form</field>
+        <field name="model">d.twelve.department</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True"/>
+                        </group>
+                        <group>
+                            <field name="parent_department_id" domain="[('parent_department_id', '=', False)]" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                        <field name="attachment_ids" filename="document_fname" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+      <record id="hr_kanban_view_d_twelve_department" model="ir.ui.view">
+           <field name="name">d.twelve.department.kanban</field>
+           <field name="model">d.twelve.department</field>
+           <field name="priority">10</field>
+           <field name="arch" type="xml">
+               <kanban class="o_d_twelve_department_kanban">
+                   <field name="name"/>
+                   <field name="parent_department_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="row">
+                                     <div class="col-6 text-center o_kanban_image"  style="background-color:#3399FF; padding-top: 15px;">
+                                         <h1>
+                                             <strong><field name="first_char"/></strong>
+                                         </h1>
+                                    </div>
+                                  <div class="col-6 text-left">
+                                      <strong>
+                                        <field name="display"/>
+                                    </strong>
+                                  </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+               </kanban>
+            </field>
+        </record>
+
+    <record id="actions_d_twelve_department" model="ir.actions.act_window">
+        <field name="name">D12 Formula</field>
+        <field name="res_model">d.twelve.department</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"search_default_groupby_parent_department_id": 1}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new Department.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_d_twelve_department"
+              name="Departments"
+              parent="menu_d_twelve"
+              action="actions_d_twelve_department"/>
+
+  </data>
+</odoo>
