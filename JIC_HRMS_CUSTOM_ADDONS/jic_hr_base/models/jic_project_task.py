@@ -17,7 +17,7 @@ class ProjectTask(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
 
-        if view_type == 'form' and self.user_has_groups('project.group_project_user') and self.user_has_groups('employee_inherits.employee_project_admin'):
+        if view_type == 'form' and self.user_has_groups('project.group_project_user') and self.user_has_groups('employee_inherits.employee_project_admin , employee_inherits.employee_rbac'):
             doc = etree.XML(res['arch'], parser=None, base_url=None)
 
             # Fields to make readonly for project users only

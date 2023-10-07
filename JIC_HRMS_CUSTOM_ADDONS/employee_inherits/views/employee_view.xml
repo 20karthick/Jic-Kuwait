@@ -249,6 +249,18 @@
             </field>
         </field>
     </record>
+      <record id="task_type_inherits_form" model="ir.ui.view">
+        <field name="name">Project Task Type Inherit</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <field name="project_ids" position="replace">
+                <field name="project_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="sequence"/>
+                <field name="is_closed"/>
+            </field>
+        </field>
+    </record>
 
       <record id="action_model_res_users_user_group_access" model="ir.actions.server">
         <field name="name">Employee Access Rights</field>
@@ -289,11 +301,15 @@
 
 
       <menuitem id="project.menu_project_config" name="Configuration" parent="project.menu_main_pm"
-            sequence="100" groups="employee_inherits.employee_project_admin,project.group_project_manager"/>
+            sequence="100" groups="employee_inherits.employee_project_admin,project.group_project_manager,employee_inherits.employee_rbac"/>
+
       <menuitem action="project.open_view_project_all_config" id="project.menu_projects_config"
                 name="Projects" parent="project.menu_project_config"
                 sequence="5"
                 groups="employee_inherits.employee_project_admin,project.group_project_manager"/>
+
+      <menuitem action="project.open_task_type_form" id="project.menu_project_config_project" name="Task Stages" parent="project.menu_project_config" sequence="10" groups="base.group_no_one,employee_inherits.employee_rbac"/>
+
 
       <record id="act_hr_timesheet_entry_all_rbac_admin" model="ir.actions.act_window">
         <field name="name">Time Sheets To Approve Employee</field>

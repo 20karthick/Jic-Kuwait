@@ -15,7 +15,9 @@
     'website': 'https://www.jic.com',
     'depends': ['base', 'web', 'project', 'hr_attendance','hr_timesheet_approval', 'hr', 'auth_signup', 'mail', 'hr_holidays', 'hr_skills','hr_payroll_community', 'jic_hr_payroll'],
     'live_test_url': '',
-    'data': ['views/employee_view.xml',
+    'data': ['security/ir.model.access.csv',
+             'security/employee_security.xml',
+             'views/employee_view.xml',
              'views/mail_template.xml',
              'views/header_footer.xml',
              'views/employee_leave_creation_view.xml',
@@ -25,8 +27,6 @@
              'views/cron.xml',
              'views/employee_leave_application_view.xml',
              'views/d12_formula_views.xml',
-             'security/employee_security.xml',
-             'security/ir.model.access.csv',
              'data/attendance_rules.xml'],
 
     'assets': {
