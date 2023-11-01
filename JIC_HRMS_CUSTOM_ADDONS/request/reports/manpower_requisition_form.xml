@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_manpower_requisition_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Manpower Requisition Form</span></h2>
+                </div>
+                <br/>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">Requester Details</td>
+                    </tr>
+                </table>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;"><b>Employee Name</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id' /></td>
+                        <td style="width:20%;padding-left: 5px;"><b>Employee No.</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.emp_code'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;"><b>Date of Joining</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.date_of_joining'/></td>
+                        <td style="width:20%;padding-left: 5px;"><b>Department</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.department_id'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;"><b>Company</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.company_id'/></td>
+                        <td style="width:20%;padding-left: 5px;"><b>Civil ID / Passport ID</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.civil_passport_join' /></td>
+                    </tr>
+                </table>
+                <br/>
+                 <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">Job Information</td>
+                    </tr>
+                </table>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:25%;;padding-left:5px;"><b>Request Date</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.request_date' /></td>
+                        <td style="width:25%;;padding-left: 5px;"><b>Requisition For Department</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_for_department'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;;padding-left: 5px;"><b>Requisition For Designation</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_for_designation'/></td>
+                        <td style="width:25%;;padding-left: 5px;"><b>Reason For Requirement</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_reason_for_requirement' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;;padding-left: 5px;"><b>Job</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_job'/></td>
+                        <td style="width:25%;;padding-left: 5px;"><b>Experience</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_experience_min'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;;padding-left: 5px;"><b>Requesting Location:</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_requesting_location'/></td>
+                        <td style="width:25%;;padding-left: 5px;"><b>No. of Vacancies</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_vacancies'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25%;;padding-left: 5px;"><b>Reporting / Line Manager:</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_reporting'/></td>
+                        <td style="width:25%;padding-left: 5px;"><b>If Urgent then specify the Duration</b></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"><b>:</b></td>
+                        <td style="width:24%;border-left:hidden;"><span t-field='o.req_urgent'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <div style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">
+                    <p>
+                        Requirement for the Job Profile with key Skills &#38; Abilities
+                    </p>
+                </div>
+                <div>
+                    <p><b>Designation:</b> <span t-field='o.req_designation'/></p>
+                </div>
+                <div>
+                    <p><b>Purpose:</b> <span t-field='o.req_purpose'/></p>
+                </div>
+                 <div>
+                    <p><b>Responsibility:</b> <span t-field='o.req_Responsibilities'/></p>
+                </div>
+                 <div>
+                    <p><b>Technical Experience:</b> <span t-field='o.req_technical_experience'/></p>
+                </div>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;">
+                                <span><t t-esc="stage['name']"/></span>
+                            </td>
+                            <td style="width:35%;height:35px;margin: auto; text-align:center;">
+                                <span><t t-esc="stage['user_id']['name']"/></span>
+                            </td>
+                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;">
+                                <span>APPROVED</span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="report_manpower_requisition_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_manpower_requisition_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_manpower_requisition_request"
+            string="Manpower Requisition Form"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_manpower_requisition_form_request"
+            name="request.report_manpower_requisition_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

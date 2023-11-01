@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_promotion_letter_without_salary_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Promotion Letter</span></h2>
+                </div>
+               <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:50%;border-right:hidden;"></td>
+                        <td style="width:50%;text-align:right;padding-right:15px;"><b>Date: </b><span t-field='o.prom_letter_date'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <div style="width:100%; text-align:left;font-weight:bold;">
+                    <p>
+                        <b>To,</b>
+                    </p>
+                </div>
+                <div>
+                    <span t-field='o.prom_title'/> <span t-field='o.prom_employee_id'/>,
+                    <span style="display: block;">Employee No.<span t-field='o.prom_employee_id.emp_code'/>,</span>
+                    <span style="display: block;" t-field='o.prom_employee_id.company_id'/>
+                </div>
+                <br/>
+                <div>
+                    <p><b>Sub: </b><span>Promotion</span></p>
+                </div>
+                 <div>
+                    <p><b>Congratulations!</b></p>
+                </div>
+                 <div>
+                    <p>
+                        We are pleased to inform you that based on your performance, management is pleased to promote you to the new role of
+                        <b><span t-field='o.prom_position'/> - <span t-field='o.prom_employee_id.company_id'/></b>. This new position would align to reflect your
+                        current roles and responsibilities more accurately.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        All the other terms and conditions of your offer letter will remain unchanged.
+                    </p>
+                    <p>
+                        You are requested to acknowledge the acceptance of this increment letter at the earliest.
+                    </p>
+                    <p>
+                        We wish you a promising career with <span t-field='o.prom_employee_id.company_id'/> and look forward to you taking on this new responsibility with
+                        dedication and commitment.
+                    </p>
+                </div>
+                <br/>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:80%; text-align:right;"></td>
+                        <td style="width:20%; text-align:center;border-left:hidden; background-color:#ededed;font-weight:bold;">Approved By</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                        <tr>
+                            <td style="width:60%;"></td>
+                            <td style="width:40%;border-left:hidden;"><t t-esc="stage['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="stage['name']"/>)</span></td>
+                        </tr>
+                    </table>
+                </t>
+                <br/><br/>
+                <hr style="border-top: 2px solid black;"></hr>
+                <div>
+                    <p style="text-align:center;">
+                        <b>Employee Acknowledgement</b>
+                    </p>
+                    <p>
+                        I accept the company's terms and conditions as well as the position.
+                    </p>
+                </div>
+                <br/>
+                <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:60%;text-align:left;">Signature of Employee:</td>
+                        <td style="width:40%;text-align:left;border-left:hidden;">Name:</td>
+                    </tr>
+                </table>
+                <br/>
+                <div><p style="text-align:left;">Date:</p></div>
+            </t>
+        </template>
+
+
+        <template id="report_promotion_letter_without_salary">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_promotion_letter_without_salary_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_promotion_letter_without_salary_request"
+            string="Promotion And Increment"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_promotion_letter_without_salary"
+            name="request.report_promotion_letter_without_salary"
+            menu="False"
+        />
+
+    </data>
+</odoo>

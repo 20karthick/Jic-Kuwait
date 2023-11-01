@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--<template id="external_layout_inherited" inherit_id="web.external_layout">-->
+<!--    <xpath expr="//div[hasclass('header')]" position="replace">-->
+<!--        Add your new code.....-->
+<!--    </xpath>-->
+<!--    </template>-->
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_salary_certificate_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+               <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:50%;border-right:hidden;"></td>
+                        <td style="width:50%;text-align:right;padding-right:15px;"><b>Date: </b><span t-field='o.sc_letter_date'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <div class="page" style="font-size:10px;">
+                    <h2 class='text-center'><span>Salary Certificate</span></h2>
+                </div>
+                <br/>
+                <br/>
+                 <div>
+                    <p>
+                        We <b><span t-field='o.sc_letter_date'/></b> certify that <b><span t-field='o.sc_title'/> <span t-field='o.sc_employee_id'/></b> nationality, holding
+                        passport No: <b><span t-field='o.sc_employee_id.passport_id'/></b> and kuwait valid Civil ID No:<b> <span t-field='o.sc_employee_id.civil_id'/></b> is
+                        working with our company since <b><span t-field='o.sc_employee_id.date_of_joining'/></b>.
+                        <t t-if="o.sc_title == 'mr'">He</t><t t-else="">She</t> is drawing a monthly salary of <b><span t-field='o.sc_monthly_salary'/></b>
+                        <b><span t-field='o.sc_currency_id'/></b> (<span t-esc="o.sc_currency_id.amount_to_text(o.sc_monthly_salary)"/>)
+                    </p>
+                </div>
+                <br/>
+                <div>
+                    <p>
+                        This letter is issued upon the employee's request and it does not constitute a financial guarantee on pur part.
+                    </p>
+                </div>
+                <br/><br/><br/><br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:80%; text-align:right;"></td>
+                        <td style="width:20%; text-align:center;border-left:hidden; background-color:#ededed;font-weight:bold;">Approved By</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                        <tr>
+                            <td style="width:60%;"></td>
+                            <td style="width:40%;border-left:hidden;"><t t-esc="stage['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="stage['name']"/>)</span></td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="report_salary_certificate">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_salary_certificate_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_report_salary_certificate"
+            string="Salary Certificate"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_salary_certificate"
+            name="request.report_salary_certificate"
+            menu="False"
+        />
+
+    </data>
+</odoo>

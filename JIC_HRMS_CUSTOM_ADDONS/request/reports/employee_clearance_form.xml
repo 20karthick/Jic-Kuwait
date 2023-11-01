@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_employee_clearance_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Employee Clearance Form</span></h2>
+                </div>
+                <br/>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Employee Name</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.employee_id'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Employee No.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;font-size:13px;"><span t-field='o.emp_code'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Department</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.department_id'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Civil ID / Passport ID</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.civil_passport_join'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Company</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.company_id'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Line Manager</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.manager_id'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Date of Joining</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.date_of_joining'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Request Date</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.request_date'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Last Working Day</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.employee_id.date_of_resignation'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Reason For Leaving</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_reason_for_leave'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Job Title</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.job_title'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                    </tr>
+                </table>
+                <br/>
+                <div style="text-align:center;font-size:13px;">
+                    <p>
+                        The Employee is required to obtain clearance from the below department before collecting the payment.
+                        payments are not processed without the <b>CLEARANCE FORM</b>. Payments will be process after 6 working days.
+                    </p>
+                </div>
+                <table style="width:100%;">
+                    <div>
+                        <td style="width:50%; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Administration</td>
+                    </div>
+                    <div>
+                        <td style="width:50%;border-left:hidden; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Govt. Relationship</td>
+                    </div>
+                </table>
+                <table style="width:100%;" class="table-striped">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;font-size:13px;">Accommodation</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_accommodation'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Passport</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_passport'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Fleet Transportation</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_fleet_transport'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Working Permit</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_work_permit'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Office Keys</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_office_key'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Civil ID</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_civil_id'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Access Card</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_access_card'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Clearance Certificate(MoJ)</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_clearance_certificate'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;">
+                    <div>
+                        <td style="width:50%; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Finance</td>
+                    </div>
+                    <div>
+                        <td style="width:50%;border-left:hidden; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Human Resource</td>
+                    </div>
+                </table>
+                <table style="width:100%;" class="table-striped">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Loans</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_loans'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Attendance</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_attendance'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Advance</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_advance'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Payroll</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_payroll'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Salary</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_salary'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">ID Card</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_id_card'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Petty Cash</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_petty_cash'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Business Cards</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_business_card'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Fuel Card</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_fuel_card'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Experience Certificate</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_experience_certificate'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Traffic Fines</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_traffic_fines'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                    </tr>
+                     <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Others</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_others'/></td>
+                         <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                     </tr>
+                </table>
+                <br/>
+                <table style="width:100%;">
+                    <div>
+                        <td style="width:50%; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Operation &#38; Technical</td>
+                    </div>
+                    <div>
+                        <td style="width:50%;border-left:hidden; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Information Technology</td>
+                    </div>
+                </table>
+                <table style="width:100%;" class="table-striped">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Line Manager Ack.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_manager_ack'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Laptop/PC</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_laptop_pc'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Handover Confirmation</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_handover_confirmation'/></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Mobile Set</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_mobile_set'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Sim Card</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_sim_card'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Internet Router</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_internet_router'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:5px;font-size:13px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;"></td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"></td>
+                        <td style="width:20%;padding-left:5px;font-size:13px;">Other IT Assets</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;font-size:13px;">:</td>
+                        <td style="width:28%;border-left:hidden;font-size:13px;"><span t-field='o.ecf_other_it_asset'/></td>
+                    </tr>
+                </table>
+                <br/>
+                 <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
+                    </tr>
+                </table>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;font-size:13px;">
+                                <span><t t-esc="stage['name']"/></span>
+                            </td>
+                            <td style="width:35%;height:35px;margin: auto; text-align:center;font-size:13px;">
+                                <span><t t-esc="stage['user_id']['name']"/></span>
+                            </td>
+                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;font-size:13px;">
+                                <span>APPROVED</span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+                <div class="footer">
+                    <div class="last-page">
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_employee_clearance_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_employee_clearance_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_employee_clearance_request"
+            string="Employee Clearance"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_employee_clearance_form_request"
+            name="request.report_employee_clearance_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

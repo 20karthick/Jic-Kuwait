@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_experience_letter_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page">
+                    <h2 class='text-center'><span>TO WHOMESOEVER IT MAY CONCERN</span></h2>
+                </div>
+                <br/>
+                <div>
+                    <h6 class='text-center'><u><b><span>Subject: Experience Certificate / Reliving Letter</span></b></u></h6>
+                </div>
+                <br/><br/>
+                <div>
+                    <p>
+                        This is to certify that <b><span t-field='o.title'/></b> <span t-field='o.emp_id'/>, Employee Number: <b><span t-field='o.emp_id.emp_code'/></b> Indian National,
+                        Holder of Passport No.<b><span t-field='o.emp_id.passport_id'/></b>, has been employed by <b><span t-field='o.emp_id.company_id'/></b>, as a <b><span t-field='o.emp_id.job_title'/></b>, from
+                        <b><span t-field='o.emp_id.date_of_joining'/></b> to <b><span t-field='o.last_working_date'/></b>.
+                    </p>
+                </div>
+                <br/>
+                <div>
+                    <p>
+                        During his service, <b><span t-field='o.title'/></b> <b><span t-field='o.emp_id'/></b> has performed his duties to an exemplary standard and has been
+                        found to be efficient and hardworking. This certificate is issued upon his request without any liability towards <b><span t-field='o.emp_id.company_id'/></b> <b><span t-field='o.emp_id.work_location_id'/></b>.
+                    </p>
+                </div>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b>Sincerely,</b></td>
+                    </tr>
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b>HR Department</b></td>
+                    </tr>
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b><span t-field='o.emp_id.company_id'/></b></td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <div class="last-page">
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_experience_letter_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_experience_letter_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_experience_letter_request"
+            string="Experience Letter"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_experience_letter_form_request"
+            name="request.report_experience_letter_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

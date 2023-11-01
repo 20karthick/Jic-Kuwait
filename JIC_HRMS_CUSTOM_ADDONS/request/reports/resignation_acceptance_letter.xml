@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_resignation_acceptance_letter_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Resignation Acceptance Letter</span></h2>
+                </div>
+               <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:50%;border-right:hidden;"></td>
+                        <td style="width:50%;text-align:right;padding-right:15px;"><b>Date: </b><span t-field='o.ral_letter_date'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <div style="width:100%; text-align:left;font-weight:bold;">
+                    <p>
+                        <b>To,</b>
+                    </p>
+                </div>
+                <div>
+                    <b><span t-field='o.ral_title'/> <span t-field='o.ral_employee_id'/></b>,
+                    <span style="display: block;">Employee No.<span t-field='o.pcl_employee_id.emp_code'/>,</span>
+                    <span style="display: block;"><span t-field='o.ral_employee_id.job_title'/>,</span>
+                    <t t-if="o.ral_employee_id.civil_id">
+                        <span style="display: block;">Civil Id #: <span t-field='o.ral_employee_id.civil_id'/>,</span>
+                    </t>
+                    <t t-else="o.pcl_employee_id.passport_id">
+                        <span style="display: block;">Passport Id #: <span t-field='o.ral_employee_id.passport_id'/>,</span>
+                    </t>
+                    <span style="display: block;"><span t-field='o.ral_employee_id.company_id'/>.</span>
+                </div>
+                <br/>
+                <div>
+                    <p><b>Sub: </b><span>Resignation Acceptance</span></p>
+                </div>
+                <div>
+                     <p>Dear <b><span t-field='o.ral_title'/> <span t-field='o.ral_employee_id'/>,</b></p>
+                </div>
+                 <div>
+                    <p>
+                        We are in receipt of your <b>resignation letter dated <span t-field='o.ral_resign_date'/></b>. This letter is the acknowledgement and
+                        acceptance of your resignation. You will be relieved of your duties on <b><span t-field='o.ral_relieved_date'/></b> after the closure of
+                        office hours.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        We expect you to perform your duties with full dedication and without any shortfalls up till your exit from we organization. Please ensure
+                        you adequately hand over the required task, vehicle, documentation, knowledge, and information as per the requirements mentioned by your supervisor.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        You are requested to settle your dues, if any, from the accounts department and obtain the clearance certificate accordingly.
+                    </p>
+
+                </div>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:80%; text-align:right;"></td>
+                        <td style="width:20%; text-align:center;border-left:hidden; background-color:#ededed;font-weight:bold;">Approved By</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                        <tr>
+                            <td style="width:60%;"></td>
+                            <td style="width:40%;border-left:hidden;"><t t-esc="stage['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="stage['name']"/>)</span></td>
+                        </tr>
+                    </table>
+                </t>
+                <br/>
+                <hr style="border-top: 2px solid black;"></hr>
+                <div>
+                    <p style="text-align:center;">
+                        <b>Employee Acknowledgement</b>
+                    </p>
+                    <p>
+                        I accept the company's terms and conditions as well as the position.
+                    </p>
+                </div>
+                <br/>
+                <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:60%;text-align:left;">Signature of Employee:</td>
+                        <td style="width:40%;text-align:left;border-left:hidden;">Name:</td>
+                    </tr>
+                </table>
+                <br/>
+                <div><p style="text-align:left;">Date:</p></div>
+            </t>
+        </template>
+
+
+        <template id="report_resignation_acceptance_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_resignation_acceptance_letter_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_resignation_acceptance_request"
+            string="Resignation Acceptance Letter"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_resignation_acceptance_request"
+            name="request.report_resignation_acceptance_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

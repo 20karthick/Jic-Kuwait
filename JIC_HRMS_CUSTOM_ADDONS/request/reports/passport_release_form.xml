@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_passport_release_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Passport Release Form</span></h2>
+                </div>
+                <br/>
+                <div>
+                    <p>
+                        This is to indicate that the employee has submitted his original passport to Jobin
+                        International Company W.L.L.
+                    </p>
+                </div>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left:15px;">Employee Name</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id' /></td>
+                        <td style="width:20%;padding-left: 15px;">Employee No.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.emp_code'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 15px;">Department</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.department_id'/></td>
+                        <td style="width:20%;padding-left: 15px;">Civil ID / Passport ID</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.civil_passport_join' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 15px;">Company</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.company_id'/></td>
+                        <td style="width:20%;padding-left: 15px;">Line Manager</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.manager_id' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 15px;">Job Title</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.job_title'/></td>
+                        <td style="width:20%;padding-left: 15px;">Request Date</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.request_date'/></td>
+
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left:15px;">Date of Joining</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.date_of_joining'/></td>
+                        <td style="width:20%;padding-left: 15px;"></td>
+                        <td style="width:2%;border-left:hidden;text-align:center;"></td>
+                        <td style="width:28%;border-left:hidden;"></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:30%;">Nationality</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.release_nationality_id'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;">Company Location</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.company_location'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;">Reason For Request Of Return</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.reason'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;">Tentative Passport Return Date</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.passport_return_date'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;">Returned By</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.return_by'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;">Date</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.return_date'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.stage_ids" t-as="stage">
+                    <table style="width:100%;table-collapsed">
+                        <tr>
+                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;">
+                                <span><t t-esc="stage['name']"/></span>
+                            </td>
+                            <td style="width:35%;height:35px;margin: auto; text-align:center;">
+                                <span><t t-esc="stage['user_id']['name']"/></span>
+                            </td>
+                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;">
+                                <span>APPROVED</span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+                <div class="footer">
+                    <div class="last-page">
+                        <tr>
+                            <div style="text-align:right;padding-right:50px;">Signature</div>
+                        </tr>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_passport_release_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_passport_release_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_passport_release_request"
+            string="Passport Release"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_passport_release_form_request"
+            name="request.report_passport_release_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

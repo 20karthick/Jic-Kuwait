@@ -1,0 +1,434 @@
+<odoo>
+  <data>
+      <record id="view_employee_request_tree" model="ir.ui.view">
+        <field name="name">employee.request.tree</field>
+        <field name="model">employee.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="job_title"/>
+                <field name="company_id"/>
+                <field name="manager_id"/>
+                <field name="request_type"/>
+                <field name="stage_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employee_request_form" model="ir.ui.view">
+        <field name="name">employee.request.form</field>
+        <field name="model">employee.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Submit / Approve" class="btn-primary" type="object" name="approve" attrs="{'invisible': [('invisible_buttons', '=', True)]}"/>
+                    <button string="Refuse" type="object" name="reject" attrs="{'invisible': [('invisible_buttons', '=', True)]}"/>
+                    <button string="Download PDF" class="btn-primary" type="object" name="print_report" attrs="{'invisible': [('invisible_buttons', '!=', True)]}"/>
+                    <field name="stage_id" widget="statusbar" attrs="{'invisible': [('request_type', '=', False), ('stage_id', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" attrs="{'readonly': [('inv_submit', '=', False)]}"/>
+                            <field name="job_title"/>
+                            <field name="company_id"/>
+                            <field name="manager_id"/>
+                            <label for="request_type" string="Request Type"/>
+                            <h4><field name="request_type" attrs="{'readonly': [('inv_submit', '=', False)]}"/></h4>
+                            <field name="user_id" invisible="1"/>
+                            <field name="user_name" invisible="1"/>
+                            <field name="stage_ids" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="department_id"/>
+                            <field name="emp_code"/>
+                            <field name="civil_id"/>
+                            <field name="passport_id"/>
+                            <field name="date_of_joining"/>
+                            <field name="request_date"/>
+                            <field name="invisible_buttons" invisible="1"/>
+                            <field name="submit" invisible="1"/>
+                            <field name="inv_submit" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page attrs="{'invisible': [('request_type', '!=', 'rt_rr')]}" string="Residence Transfer/ Renewal Request" name="rt_rr">
+                            <group>
+                                <group string="First time Residence Transfer">
+                                     <field name="probation_completed" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="basic_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="work_permit_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Residence Renewal">
+                                     <field name="no_of_years" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="basic_salary_renewal" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="work_permit_salary_renewal" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'cp')]}" string="Change in Pay" name="cp">
+                            <group>
+                                <group>
+                                    <field name="current_job_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                <field name="change_job_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Existing">
+                                    <field name="existing_basic_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="existing_add_allowance" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="existing_gross_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Revision">
+                                     <field name="revision_basic_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="revision_add_allowance" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="revision_gross_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                    <field name="revised_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                    <field name="justification" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'maf')]}" string="Mobile Acknowledgment" name="maf">
+                            <group>
+                                <group>
+                                    <field name="manufactured_by" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="model_name" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="model_no" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                     <field name="serial_no" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="imei_code_1" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="imei_code_2" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                    <field name="accessories" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                    <field name="description" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'paf')]}" string="Passport Acknowledgment" name="paf">
+                            <group>
+                                <group>
+                                    <field name="nationality_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="office_location" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="handover_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="handed_over_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'prf')]}" string="Passport Release" name="prf">
+                            <group>
+                                <group>
+                                    <field name="release_nationality_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="company_location" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="reason" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="passport_return_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="return_by" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="return_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'saf')]}" string="Salary Advance" name="saf">
+                            <group>
+                                <group>
+                                    <field name="monthly_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="advance_request_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="reason_for_advance" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="request_amount" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'vhf')]}" string="Vehicle Handover" name="vhf">
+                            <group>
+                                <group string="Vehicle Holder Details">
+                                     <field name="v_name" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="v_civil_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Vehicle Details">
+                                     <field name="vehicle_reg_no" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="make_model" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="odometer" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Handover &#38; Inspection Details">
+                                     <field name="handover_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="vehicle_handover_to" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="inspection_done" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="inspection_comments" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'el')]}" string="Experience Letter" name="el">
+                            <group>
+                                <group>
+                                     <field name="title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="emp_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="last_working_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'laf')]}" string="Laptop Acknowledge Form" name="laf">
+                            <group>
+                                <group string="Laptop Details">
+                                     <field name="laf_company" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="laf_model_type" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="laf_serial_no" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="laf_color" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="laf_charger" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="laf_keyboard" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="laf_mouse" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="laf_laptop_bag" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Employee Details">
+                                     <field name="title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="laf_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="laf_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'ecf')]}" string="Employee Clearance" name="ecf">
+                            <group>
+                                <group>
+                                    <field name="ecf_reason_for_leave" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group>
+                                </group>
+                                <group string="Administration Department">
+                                     <field name="ecf_accommodation" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_fleet_transport" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_office_key" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_access_card" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Govt.Relationship Department">
+                                     <field name="ecf_passport" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_work_permit" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_civil_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_clearance_certificate" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Finance Department">
+                                     <field name="ecf_loans" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_advance" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_petty_cash" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_fuel_card" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_traffic_fines" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_others" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="HR Department">
+                                     <field name="ecf_attendance" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_payroll" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_id_card" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_business_card" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_experience_certificate" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Operation &#38; Technical ">
+                                     <field name="ecf_manager_ack" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_handover_confirmation" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Information Technology">
+                                     <field name="ecf_laptop_pc" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_mobile_set" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_sim_card" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_internet_router" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ecf_other_it_asset" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'mrf')]}" string="Manpower Requisition Form" name="mrf">
+                            <group>
+                                <group string="Job Information">
+                                     <field name="req_for_department" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_for_designation" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_job" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_reason_for_requirement" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_experience_min" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_experience_max" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Skills &#38; Abilities">
+                                     <field name="req_designation" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_purpose" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_Responsibilities" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_technical_experience" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group>
+                                    <field name="req_requesting_location" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_vacancies" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_reporting" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_urgent" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                                <group string="Preferred Education">
+                                    <field name="req_higher_secondary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_diploma" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_bachelor_degree" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_master_degree" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="req_training_project" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                    <field name="req_related_experience" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'pai')]}" string="Promotion and Increment" name="pai">
+                            <group>
+                                <group string="Job Information">
+                                     <field name="pai_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pai_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pai_position" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pai_currency_id"/>
+                                     <field name="pai_salary_increment" widget="monetary"/>
+                                     <field name="pai_start_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pai_pdf_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'pcl')]}" string="Probation Confirmation with salary" name="pcl">
+                            <group>
+                                <group>
+                                     <field name="pcl_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pcl_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pcl_effective_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pcl_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="pcl_currency_id"/>
+                                     <field name="pcl_basic_salary" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pcl_revised_salary" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'pclws')]}" string="Probation Confirmation without salary" name="pclws">
+                            <group>
+                                <group>
+                                     <field name="pclws_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pclws_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pclws_effective_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="pclws_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'prom')]}" string="Probation Confirmation without salary" name="prom">
+                            <group>
+                                <group>
+                                     <field name="prom_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="prom_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="prom_position" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="prom_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'ral')]}" string="Resignation Acceptance Letter" name="ral">
+                            <group>
+                                <group>
+                                     <field name="ral_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ral_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ral_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}" />
+                                     <field name="ral_resign_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ral_relieved_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'dl')]}" string="Deputation Letter Details" name="dl">
+                            <group>
+                                <group>
+                                     <field name="dl_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_from_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_deputed_to" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_designation" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_accommodation_details" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="dl_law" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'sc')]}" string="Salary Certificate" name="sc">
+                            <group>
+                                <group>
+                                     <field name="sc_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="sc_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="sc_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="sc_currency_id"/>
+                                     <field name="sc_monthly_salary" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'va')]}" string="Vehicle Acknowledgement" name="va">
+                            <group>
+                                <group>
+                                     <field name="va_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="va_employee_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="va_letter_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="va_nationality" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="va_vehicle_model"/>
+                                     <field name="va_vehicle_number" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'nlr')]}" string="Notification Of Leave Return" name="nlr">
+                            <group>
+                                <group string="Employee Leave Return Details">
+                                     <field name="date_resumed_work" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="date_of_departure" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="date_of_arrival" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nlr_status" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nlr_days" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nlr_if_late" attrs="{'readonly': [('invisible_buttons', '=', True)]}" placeholder="If late, Please explain."/>
+                                </group>
+                                <group string="For the use of HR Department">
+                                     <field name="hr_nlr_status" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="hr_days" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="hr_passport_returned" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="hr_remarks" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" options="{'post_refresh':True}"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="actions_employee_request" model="ir.actions.act_window">
+        <field name="name">Request</field>
+        <field name="res_model">employee.request</field>
+        <field name="context">{'search_default_my_tasks': 1}</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new Request.
+            </p>
+        </field>
+    </record>
+
+
+
+    <menuitem
+        id="request_menu_root"
+        name="Request"
+        web_icon="request,static/img/send_request.png"
+        sequence="1"/>
+
+      <menuitem
+        id="request_menu"
+        name="Requests"
+        parent="request.request_menu_root"
+        sequence="1"/>
+      <menuitem
+        id="request_configuration_menu"
+        name="Configuration"
+        parent="request.request_menu_root"
+        sequence="2"/>
+
+       <menuitem id="menu_employee_request"
+              name="Requests"
+              sequence="1"
+              parent="request.request_menu"
+              action="actions_employee_request"/>
+
+
+  </data>
+</odoo>
