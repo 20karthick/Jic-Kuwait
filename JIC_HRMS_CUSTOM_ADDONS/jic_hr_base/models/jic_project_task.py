@@ -10,6 +10,7 @@ class ProjectTask(models.Model):
 
     # Reason : This is to avoid editing project related fields
     # for all the users except project manager
+    count_sub_task = fields.Char(string="Subtask Count", compute='_subtask_counts')
 
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
                         submenu=False):
@@ -47,3 +48,6 @@ class ProjectTask(models.Model):
                 res['arch'] = etree.tostring(doc)
         return res
 
+    def _subtask_counts(self):
+        for task in self:
+            task.count_sub_task = str(len(task.child_ids)) + " (Tasks)"
