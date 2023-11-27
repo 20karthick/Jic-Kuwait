@@ -64,8 +64,13 @@ class EmployeeSeparation(models.Model):
             else:
                 raise ValidationError(_("Please fill the last working date for this employee"))
 
-            # Change employee state to "Resigned"
-            rec.employee_id.state = "resigned"
+
+            if rec.type == 'fired':
+                rec.employee_id.state = "terminated"
+                # Change employee state to "Terminated"
+            else:
+                rec.employee_id.state = "resigned"
+                # Change employee state to "Resigned"
 
             # Create payslip input request to pull this amount on the payslip
             rec.create_payslip_input_request()
@@ -82,6 +87,7 @@ class EmployeeSeparation(models.Model):
                     "note": rec.calculations,
                     "date": rec.last_working_day,
                     "amount": rec.settlement_amount,
+                    "hr_responsible_id": rec.hr_responsible_id.id,
                     "input_line_ids": [
                         (
                             0, 0,
@@ -141,7 +147,7 @@ class EmployeeSeparation(models.Model):
                 calculations = ''
 
                 tmp_total_years = total_years
-                if rec.checklist_type_id:
+                if rec.checklist_type_id and rec.employee_id.company_id.currency_id.name == 'KWD':
                     months = 0.0
                     for chk_conf in rec.checklist_type_id.settlement_conf_ids:
                         if chk_conf.to_year <= tmp_total_years:

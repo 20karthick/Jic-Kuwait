@@ -58,11 +58,11 @@
                     </tr>
                 </table>
                 <br/>
-                <t t-foreach="o.stage_ids" t-as="stage">
+                <t t-foreach="o.approver_ids" t-as="approver">
                     <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
                         <tr>
                             <td style="width:60%;"></td>
-                            <td style="width:40%;border-left:hidden;"><t t-esc="stage['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="stage['name']"/>)</span></td>
+                            <td style="width:40%;border-left:hidden;"><t t-esc="approver['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="approver['from_stage_id']['name']"/>)</span></td>
                         </tr>
                     </table>
                 </t>

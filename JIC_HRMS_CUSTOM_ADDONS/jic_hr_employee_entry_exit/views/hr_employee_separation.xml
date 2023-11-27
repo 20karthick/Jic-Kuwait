@@ -33,7 +33,7 @@
                 <button name="button_confirm_manager" states="confirm" string="Validate" type="object" class="oe_highlight"/>
                 <button name="button_confirm_hr" states="validated" string="Approve" type="object" class="oe_highlight"/>
                 <button name="button_completed" states="approved" string="Completed" type="object"/>
-                <button name="button_back_off" states="confirm,validated" string="Back-Off" type="object"/>
+                <button name="button_back_off"  string="Back-Off" type="object"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validated,approved,completed,back_off,reject"/>
                 </header>
                 <sheet>

@@ -1,8 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
+access_user_request_approver_history,request.approver.history,model_request_approver_history,base.group_user,1,1,1,1
 access_user_employee_request_admin,employee.request,model_employee_request,group_request_administrator,1,1,1,1
 access_user_employee_request_user,employee.request,model_employee_request,base.group_user,1,1,1,0
 access_user_request_stage_user,request.stage,model_request_stage,request.group_request_user,1,0,0,0
 access_user_request_stage_hr,request.stage,model_request_stage,request.group_request_hr,1,1,1,0
 access_user_request_stage_manager,request.stage,model_request_stage,request.group_request_manager,1,1,1,0
 access_user_request_stage_admin,request.stage,model_request_stage,request.group_request_administrator,1,1,1,1
+

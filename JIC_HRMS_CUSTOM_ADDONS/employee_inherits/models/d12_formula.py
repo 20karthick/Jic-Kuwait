@@ -107,11 +107,10 @@ class DTwelveDepartment(models.Model):
     name = fields.Char(string='Name')
     description = fields.Text(string='Description')
     parent_department_id = fields.Many2one('d.twelve.department', "Parent Department", index=True)
-    attachment_ids = fields.Many2many('ir.attachment', string='Files', required=True,
-                                      help='Get you bank statements in electronic format from your bank and'
-                                           ' select them here.')
     first_char = fields.Char(string="First Char", compute='firstchar')
     display = fields.Char(string="First Char", compute='firstchar')
+    attachment_ids = fields.Many2many('ir.attachment', string="File")
+    # department_line_ids = fields.One2many('d.twelve.department.line', 'd_twelve_department_id', string='Department Line')
 
     @api.depends('name')
     def firstchar(self):
@@ -120,6 +119,15 @@ class DTwelveDepartment(models.Model):
                 f.first_char = f.name.split('.')[:1][0].strip()[:3]
                 f.display = f.name.split('.', 1)[1].strip()[:70]
 
+# class DTwelveDepartmentLine(models.Model):
+#     _name = 'd.twelve.department.line'
+#     _description = 'D12 Department Line'
+#
+#     d_twelve_department_id = fields.Many2one('d.twelve.department',  string="Department")
+#     attachment_ids = fields.Many2many('ir.attachment', string="File")
+#
+#     def preview(self):
+#         print("LLLLLLLLLLLLLLL")
 
 
 

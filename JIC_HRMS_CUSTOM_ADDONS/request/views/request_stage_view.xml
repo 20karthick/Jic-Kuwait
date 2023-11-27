@@ -20,9 +20,11 @@
                 <field name="name"/>
                 <field name="request_type"/>
                 <field name="sequence"/>
+                <field name="line_manager"/>
                 <field name="start_stage"/>
                 <field name="end_stage"/>
-                <field name="user_id"/>
+<!--                <field name="user_id"/>-->
+                <field name="department"/>
                 <field name="company_id"/>
             </tree>
         </field>
@@ -38,12 +40,14 @@
                         <group>
                             <field name="name"/>
                             <field name="start_stage"/>
+                            <field name="line_manager"/>
                             <field name="sequence"/>
                         </group>
                         <group>
                             <field name="request_type"/>
                             <field name="end_stage"/>
-                             <field name="user_id" attrs="{'required': [('start_stage', '=', False), ('end_stage', '=', False)]}"/>
+<!--                             <field name="user_id" />-->
+                             <field name="department"/>
                              <field name="company_id"/>
                         </group>
                     </group>

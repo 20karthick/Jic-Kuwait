@@ -231,16 +231,16 @@
                         <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
                     </tr>
                 </table>
-                <t t-foreach="o.stage_ids" t-as="stage">
+                <t t-foreach="o.approver_ids" t-as="approver">
                     <table style="width:100%;">
                         <tr>
-                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;font-size:13px;">
-                                <span><t t-esc="stage['name']"/></span>
+                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;">
+                                <span><t t-esc="approver['from_stage_id']['name']"/></span>
                             </td>
-                            <td style="width:35%;height:35px;margin: auto; text-align:center;font-size:13px;">
-                                <span><t t-esc="stage['user_id']['name']"/></span>
+                            <td style="width:35%;height:35px;margin: auto; text-align:center;">
+                                <span><t t-esc="approver['user_id']['name']"/></span>
                             </td>
-                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;font-size:13px;">
+                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;">
                                 <span>APPROVED</span>
                             </td>
                         </tr>

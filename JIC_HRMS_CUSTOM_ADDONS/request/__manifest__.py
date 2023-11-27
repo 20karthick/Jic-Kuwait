@@ -40,6 +40,10 @@
              'reports/salary_certificate.xml',
              'reports/vehicle_acknowledgment.xml',
              'reports/notification_of_leave_return.xml',
+             'reports/loan_request_form.xml',
+             'reports/no_objection_letter_to_embassy.xml',
+             'reports/internship_certificate.xml',
+             'reports/tablet_acknowledgement.xml',
              ],
 
     'pre_init_hook': '',

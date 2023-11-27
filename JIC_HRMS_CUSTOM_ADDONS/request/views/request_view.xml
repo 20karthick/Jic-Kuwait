@@ -381,6 +381,85 @@
                                 </group>
                             </group>
                         </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'lrf')]}" string="Loan Request Form" name="lrf">
+                            <group>
+                                <group string="To be Filled By Employee">
+                                     <field name="lrf_amount_request" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="lrf_reason_for_request" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="lrf_currency_id" invisible="1"/>
+                                </group>
+                                <group string="Human Resource Department">
+                                    <field name="lrf_basic_salary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_previous_loans" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_pending_loan_amount" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_eligible_loan_amount" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_recommended_loan_amount" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_loan_approved" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_no_of_installments" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                    <field name="lrf_monthly_deduction_amount" widget="monetary" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Finance Department">
+                                     <field name="lrf_finance_loan_approved" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group string="Management(In case of Exception)">
+                                     <field name="lrf_mgmt_loan_approved" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'nol')]}" string="No Objection Letter to Embassy" name="nol">
+                            <group>
+                                <group>
+                                     <field name="nol_form_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_the_embassy_of" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_nationality_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_applicant_name" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_passport_number" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_emp_part" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="nol_company_name" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_designation" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_since" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_salary_amount" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_start_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="nol_end_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'ic')]}" string="Internship Certificate" name="ic">
+                            <group>
+                                <group>
+                                     <field name="ic_form_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_student_name" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_clg_university" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_company_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="ic_department_id" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_start_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_end_date" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="ic_guidance_of" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page attrs="{'invisible': [('request_type', '!=', 'taf')]}" string="Tablet Acknowledgement" name="taf">
+                            <group>
+                                <group>
+                                     <field name="taf_made_by" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_model_type" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_serial_no" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_color" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_date_of" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="taf_charger" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_keyboard" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_mouse" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_laptop_bag" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                     <field name="taf_title" attrs="{'readonly': [('invisible_buttons', '=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

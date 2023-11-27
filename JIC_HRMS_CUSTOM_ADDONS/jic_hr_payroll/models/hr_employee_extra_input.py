@@ -114,7 +114,7 @@ class HREmployeeInputsRequest(models.Model):
 
             if rec.amount < sum([a.amount for a in rec.input_line_ids]):
                 raise ValidationError(_("Total amount exceeded"))
-
+            print("oooooooooooooooo",rec.hr_responsible_id)
             if not rec.hr_responsible_id:
                 raise ValidationError(_("Please set HR Responsible for this employee - %s")%(rec.employee_id.name))
 

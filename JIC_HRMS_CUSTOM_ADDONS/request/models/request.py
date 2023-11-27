@@ -5,6 +5,14 @@ from datetime import datetime, date, timedelta, time
 import json
 from lxml import etree
 
+class RequestApproverHistory(models.Model):
+    _name = 'request.approver.history'
+
+    request_id = fields.Many2one('employee.request', string="Employee Request")
+    from_stage_id = fields.Many2one('request.stage', string="From Stage")
+    to_stage_id = fields.Many2one('request.stage', string="To Stage")
+    user_id = fields.Many2one('res.users', string="Users")
+
 
 class EmployeeRequest(models.Model):
     _name = 'employee.request'
@@ -43,6 +51,10 @@ class EmployeeRequest(models.Model):
                                      ('sc', 'Salary Certificate'),
                                      ('va', 'Vehicle Acknowledgement'),
                                      ('nlr', 'Notification of Leave Return'),
+                                     ('lrf', 'Loan Request'),
+                                     ('nol', 'No Objection Letter to Embassy'),
+                                     ('ic', 'Internship Certificate'),
+                                     ('taf', 'Tablet Acknowledgment Form'),
                                        ], 'Request Type', required=True)
     stage_id = fields.Many2one('request.stage', string='Stage', compute='_compute_stage_id',
                                store=True, readonly=False, ondelete='restrict', tracking=True, index=True,
@@ -58,6 +70,7 @@ class EmployeeRequest(models.Model):
     request_date = fields.Datetime(string='Request Date', compute='_compute_get_employee_details', store=True)
 
     civil_passport_join = fields.Char(string='civil Passport join', compute='_join_civil_passport', store=True)
+    approver_ids = fields.One2many('request.approver.history', 'request_id', string='Approved Stage', copy=True)
 
     @api.depends('civil_id', 'passport_id')
     def _join_civil_passport(self):
@@ -113,6 +126,12 @@ class EmployeeRequest(models.Model):
             return self.env.ref('request.action_vehicle_acknowledgement').report_action(self)
         elif self.request_type == 'nlr':
             return self.env.ref('request.action_notification_of_leave_return').report_action(self)
+        elif self.request_type == 'nol':
+            return self.env.ref('request.action_promotion_increment_letter_request').report_action(self)
+        elif self.request_type == 'ic':
+            return self.env.ref('request.action_internship_certificate').report_action(self)
+        elif self.request_type == 'taf':
+            return self.env.ref('request.action_tablet_acknowledgment').report_action(self)
         else:
             raise UserError(_("There is no pdf Report."))
 
@@ -130,11 +149,22 @@ class EmployeeRequest(models.Model):
         seq_number = sequence - 1
         stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)
         if stage:
-            if self.stage_id.user_id == self.env.user:
-                self.stage_id = stage.id
-                self.invisible_buttons = False
-            else:
-                raise UserError(_("Which user is assigned as the current stage approver, Only that user can refuse it."))
+            if self.stage_id.line_manager:
+                manager = self.employee_id.parent_id
+                if manager.user_id == self.env.user:
+                    self.env["request.approver.history"].search([('request_id', '=', self.id), ('from_stage_id', '=', stage.id), ('to_stage_id', '=', self.stage_id.id)]).unlink()
+                    self.stage_id = stage.id
+                    self.invisible_buttons = False
+                else:
+                    raise UserError(_("Only %s Line Manager can refuse it.", manager.name))
+
+            if self.stage_id.department:
+                if self.stage_id.department == self.env.user.department:
+                    self.env["request.approver.history"].search([('request_id', '=', self.id), ('from_stage_id', '=', stage.id), ('to_stage_id', '=', self.stage_id.id)]).unlink()
+                    self.stage_id = stage.id
+                    self.invisible_buttons = False
+                else:
+                    raise UserError(_("Only %s Department user can refuse it.", self.stage_id.department))
         else:
             raise UserError(_("Already you are in requesting stage."))
 
@@ -150,7 +180,6 @@ class EmployeeRequest(models.Model):
                         self.stage_ids = [(4, self.stage_id.id)]
                     if stage:
                         self.stage_id = stage.id
-                        self.user_name = stage.user_id.name
                         self.invisible_buttons = False
                         if stage.end_stage == True:
                             self.invisible_buttons = True
@@ -163,25 +192,62 @@ class EmployeeRequest(models.Model):
                     raise UserError(_("Only selected employee can submit / Approve from user."))
 
 
-            elif self.stage_id.user_id == self.env.user:
-                seq = self.stage_id.sequence
-                seq_number = seq + 1
-                stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)
-                if not self.stage_id.start_stage and not self.stage_id.end_stage:
-                    self.stage_ids = [(4, self.stage_id.id)]
-                if stage:
-                    self.stage_id = stage.id
-                    self.user_name = stage.user_id.name
-                    self.invisible_buttons = False
-                    if stage.end_stage == True:
-                        self.invisible_buttons = True
+            elif self.stage_id.line_manager:
+                manager = self.employee_id.parent_id
+                if not manager:
+                    raise UserError(_("Manager Not Mapped For requested employee(%s)", self.employee_id.name))
 
+                if manager.user_id == self.env.user:
+                    seq = self.stage_id.sequence
+                    seq_number = seq + 1
+                    stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)
+                    if not self.stage_id.start_stage and not self.stage_id.end_stage:
+                        self.stage_ids = [(4, self.stage_id.id)]
+                    if stage:
+                        self.approver_ids.create({
+                            'request_id': self.id,
+                            'from_stage_id': self.stage_id.id,
+                            'to_stage_id': stage.id,
+                            'user_id': self.env.user.id,
+                        })
+                        self.stage_id = stage.id
+                        self.invisible_buttons = False
+                        if stage.end_stage == True:
+                            self.invisible_buttons = True
+
+                    else:
+                        self.stage_id = self.stage_id
+                        if not self.invisible_buttons:
+                            raise UserError(_("Kindly check the stage Sequence or enable which one is end stage."))
                 else:
-                    self.stage_id = self.stage_id
-                    if not self.invisible_buttons:
-                        raise UserError(_("Kindly check the stage Sequence or enable which one is end stage."))
-            else:
-                raise UserError(_("Which user is assigned as the current stage approver, Only that user can approve it."))
+                    raise UserError(_("Only Line Manager can approve it."))
+
+            elif self.stage_id.department:
+                department = self.stage_id.department
+                if department == self.env.user.department:
+                    seq = self.stage_id.sequence
+                    seq_number = seq + 1
+                    stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)
+                    if not self.stage_id.start_stage and not self.stage_id.end_stage:
+                        self.stage_ids = [(4, self.stage_id.id)]
+                    if stage:
+                        self.approver_ids.create({
+                            'request_id': self.id,
+                            'from_stage_id': self.stage_id.id,
+                            'to_stage_id': stage.id,
+                            'user_id': self.env.user.id,
+                        })
+                        self.stage_id = stage.id
+                        self.invisible_buttons = False
+                        if stage.end_stage == True:
+                            self.invisible_buttons = True
+
+                    else:
+                        self.stage_id = self.stage_id
+                        if not self.invisible_buttons:
+                            raise UserError(_("Kindly check the stage Sequence or enable which one is end stage."))
+                else:
+                    raise UserError(_("Only %s Department user can approve it.", self.stage_id.department))
         else:
             raise UserError(_("Check whether request stages or request type exists in this request or not. If not inform to HR."))
 
@@ -443,3 +509,54 @@ class EmployeeRequest(models.Model):
     hr_days = fields.Char(string="Days", tracking=True)
     hr_passport_returned = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Return Status', tracking=True)
     hr_remarks = fields.Char(string="Remarks", tracking=True)
+
+    # Loan Request Form
+    lrf_amount_request = fields.Monetary('Amount Requested', currency_field="lrf_currency_id", tracking=True)
+    lrf_reason_for_request = fields.Char(string="Reason For Request", tracking=True)
+    lrf_currency_id = fields.Many2one(related='employee_id.company_id.currency_id', string='Company Currency', readonly=True, tracking=True)
+    lrf_basic_salary = fields.Monetary('Basic Salary', currency_field="lrf_currency_id", tracking=True)
+    lrf_previous_loans = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Previous Loans', tracking=True)
+    lrf_pending_loan_amount = fields.Monetary('Pending Loan Amount', currency_field="lrf_currency_id", tracking=True)
+    lrf_eligible_loan_amount = fields.Monetary('Eligible Loan Amount', currency_field="lrf_currency_id", tracking=True)
+    lrf_recommended_loan_amount = fields.Monetary('Recommended Loan Amount', currency_field="lrf_currency_id", tracking=True)
+    lrf_loan_approved = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Loan Approved', tracking=True)
+    lrf_no_of_installments = fields.Integer(string="No. of Installments", tracking=True)
+    lrf_monthly_deduction_amount = fields.Monetary('Monthly Deduction Amount', currency_field="lrf_currency_id", tracking=True)
+    lrf_finance_loan_approved = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Loan Approved', tracking=True)
+    lrf_mgmt_loan_approved = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Loan Approved', tracking=True)
+
+    # No Objection Letter to Embassy
+    nol_form_date = fields.Date(string="Form Date", tracking=True)
+    nol_the_embassy_of = fields.Char(string="The embassy of", tracking=True)
+    nol_nationality_id = fields.Many2one("res.country", string="Nationality", tracking=True)
+    nol_applicant_name = fields.Char(string="Name of the applicant", tracking=True)
+    nol_passport_number = fields.Char(string="Passport Number", tracking=True)
+    nol_emp_part = fields.Char(string="Employed / Partner", tracking=True)
+    nol_company_name = fields.Char(string="Company Name", tracking=True)
+    nol_designation = fields.Char(string="Designation", tracking=True)
+    nol_since = fields.Date(string="Since", tracking=True)
+    nol_salary_amount = fields.Char(string="Salary Amount", tracking=True)
+    nol_start_date = fields.Date(string="Start Date", tracking=True)
+    nol_end_date = fields.Date(string="End Date", tracking=True)
+
+    # Internship Certificate
+    ic_form_date = fields.Date(string="Form Date", tracking=True)
+    ic_student_name = fields.Char(string="Student Name", tracking=True)
+    ic_clg_university = fields.Char(string="College / University", tracking=True)
+    ic_company_id = fields.Many2one('res.company', string='Company')
+    ic_department_id = fields.Many2one('hr.department', string="Department")
+    ic_start_date = fields.Date(string="Start Date", tracking=True)
+    ic_end_date = fields.Date(string="End Date", tracking=True)
+    ic_guidance_of = fields.Char(string="Guidance Of", tracking=True)
+
+    # Tablet Acknowledge form
+    taf_made_by = fields.Date(string="Form Date", tracking=True)
+    taf_model_type = fields.Char(string="Model / Type", tracking=True)
+    taf_serial_no = fields.Char(string="Serial No.", tracking=True)
+    taf_color = fields.Char(string="Color", tracking=True)
+    taf_charger = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Charger', tracking=True)
+    taf_keyboard = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Keyboard', tracking=True)
+    taf_mouse = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Mouse', tracking=True)
+    taf_laptop_bag = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Laptop Bag', tracking=True)
+    taf_date_of = fields.Date(string="Date of", tracking=True)
+    taf_title = fields.Selection([('mr', 'Mr.'), ('ms', 'Ms.'), ('mrs', 'Mrs.'), ('miss', 'Miss.')], 'Title', tracking=True)

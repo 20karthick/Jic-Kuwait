@@ -97,14 +97,14 @@
                     </tr>
                 </table>
                 <br/>
-                <t t-foreach="o.stage_ids" t-as="stage">
+                <t t-foreach="o.approver_ids" t-as="approver">
                     <table style="width:100%;">
                         <tr>
                             <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;">
-                                <span><t t-esc="stage['name']"/></span>
+                                <span><t t-esc="approver['from_stage_id']['name']"/></span>
                             </td>
                             <td style="width:35%;height:35px;margin: auto; text-align:center;">
-                                <span><t t-esc="stage['user_id']['name']"/></span>
+                                <span><t t-esc="approver['user_id']['name']"/></span>
                             </td>
                             <td style="width:30%;height:35px;margin: 0 auto; text-align:center;">
                                 <span>APPROVED</span>

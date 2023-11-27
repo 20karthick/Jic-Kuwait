@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_tablet_acknowledgment_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Tablet Acknowledgement Form</span></h2>
+                </div>
+                <br/>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;">Employee Name</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id' /></td>
+                        <td style="width:20%;padding-left: 5px;">Employee No.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.emp_code'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Job Title</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.job_title'/></td>
+                        <td style="width:20%;padding-left: 5px;">Department</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.department_id'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Work Location</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id.work_location_id'/></td>
+                        <td style="width:20%;padding-left: 5px;">Reporting To</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.manager_id' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Mobile No.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id.mobile_phone'/></td>
+                        <td style="width:20%;padding-left:5px;">Email Id</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id.work_email'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Civil ID / Passport ID</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.civil_passport_join' /></td>
+                        <td style="width:20%;padding-left: 5px;">Request Date</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.request_date'/></td>
+                    </tr>
+                </table>
+                <br/>
+                 <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:100%;padding-left: 5px; text-align:left; background-color:#ededed;font-weight:bold;">Laptop Details</td>
+                    </tr>
+                </table>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Made By</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_model_type'/></td>
+                        <td style="width:20%;padding-left: 5px;">Charger</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_charger'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Model / Type</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_model_type'/></td>
+                        <td style="width:20%;padding-left: 5px;">keyboard</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_keyboard'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Serial No</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_serial_no'/></td>
+                         <td style="width:20%;padding-left: 5px;">Mouse</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_mouse'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Color</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_color'/></td>
+                         <td style="width:20%;padding-left: 5px;">Laptop Bag</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:28%;"><span t-field='o.taf_laptop_bag'/></td>
+                    </tr>
+                </table>
+                <div>
+                    <p>
+                        On the date of <b><span t-field='o.taf_date_of'/></b> I, <b><span t-field='o.taf_title'/> <span t-field='o.employee_id'/></b>  I received a <b>Tablet</b> owned and
+                        issued by <b><span t-field='o.company_id'/>.</b>
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        In doing so, I do in fact understand that i am solely responsible for this device until it is returned to the company's IT Department.
+                        while under my care, I acknowledge that any physical or accidental damage is my fault and i will be held accountable for it.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        While using this Tablet device, I will not commit any acts of cyber terrorism / crime, Illegal activity, share any company's confidential
+                        information with unauthorized users, search or watch explicit content, install any software without IT department consent, or lend Tablet to friends or
+                        family members, I will strictly use this Tablet for work purpose only.
+                    </p>
+                </div>
+                 <div>
+                    <p>
+                       By singing this document, I am accepting and agreeing to the terms of use for this Tablet in Jic.
+                    </p>
+                </div>
+                <br/>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.approver_ids" t-as="approver">
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:35%;height:35px; text-align:center;margin: auto; background-color:#ededed;">
+                                <span><t t-esc="approver['from_stage_id']['name']"/></span>
+                            </td>
+                            <td style="width:35%;height:35px;margin: auto; text-align:center;">
+                                <span><t t-esc="approver['user_id']['name']"/></span>
+                            </td>
+                            <td style="width:30%;height:35px;margin: 0 auto; text-align:center;">
+                                <span>APPROVED</span>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+                <div class="footer">
+                    <div class="last-page">
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_tablet_acknowledgment_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_tablet_acknowledgment_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_tablet_acknowledgment"
+            string="Tablet Acknowledgement"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_tablet_acknowledgment_form_request"
+            name="request.report_tablet_acknowledgment_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

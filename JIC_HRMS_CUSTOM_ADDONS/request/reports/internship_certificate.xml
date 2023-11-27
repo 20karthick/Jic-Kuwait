@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_internship_certificate_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page">
+                    <h2 class='text-center'><span>INTERNSHIP CERTIFICATE</span></h2>
+                </div>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:50%;border-right:hidden;"></td>
+                        <td style="width:50%;text-align:right;padding-right:15px;"><b>Date: </b><span t-field='o.ic_form_date'/></td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <br/><br/>
+                <div>
+                    <h6 class='text-center'><u><b><span>TO WHOM IT MAY CONCERN</span></b></u></h6>
+                </div>
+                <br/><br/>
+                <div>
+                    <p>
+                        This certification proves that <b><span t-field="o.ic_student_name"/></b> student at <b><span t-field="o.ic_clg_university"/></b> has
+                        completed the internship training at <b><span t-field="o.ic_company_id"/></b> - <b><span t-field="o.ic_department_id"/></b> start from
+                        <b><span t-field="o.ic_start_date"/></b> till <b><span t-field="o.ic_end_date"/></b> under the guidance of <b><span t-field="o.ic_guidance_of"/>.</b>
+                    </p>
+                </div>
+                <br/>
+                <div>
+                    <p>
+                        During his/her stay in the company as an intern, she displays enthusiasm and self motivation.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        We wish him/her all the best in all his/her future endeavors.
+                    </p>
+                    <p>
+                        For <b><span t-field="o.ic_company_id"/></b>
+                    </p>
+                </div>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b>Sincerely,</b></td>
+                    </tr>
+                    <br/><br/><br/><br/><br/>
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b>HR Department</b></td>
+                    </tr>
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b><b><span t-field="o.ic_company_id"/></b></b></td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <div class="last-page">
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_internship_certificate_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_internship_certificate_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_internship_certificate"
+            string="Internship Certificate"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_internship_certificate_form_request"
+            name="request.report_internship_certificate_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>

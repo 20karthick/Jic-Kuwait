@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_loan_request_request">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page" style="font-size:15px;">
+                    <h2 class='text-center'><span>Loan Request Form</span></h2>
+                </div>
+                <br/>
+                 <tr>
+                    <div style="text-align:center; background-color:#ededed;font-weight:bold;"><strong>EMPLOYEE DETAILS</strong></div>
+                </tr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;padding-left:5px;">Employee Name</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.employee_id' /></td>
+                        <td style="width:20%;padding-left: 5px;">Employee No.</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.emp_code'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Department</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.department_id'/></td>
+                        <td style="width:20%;padding-left: 5px;">Civil ID / Passport ID</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.civil_passport_join' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Company</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.company_id'/></td>
+                        <td style="width:20%;padding-left: 5px;">Line Manager</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.manager_id' /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Job Title</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.job_title'/></td>
+                        <td style="width:20%;padding-left: 5px;">Request Date</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.request_date'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;padding-left: 5px;">Amount Requested</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.lrf_amount_request'/></td>
+                        <td style="width:20%;padding-left: 5px;">Reason For Request</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.lrf_reason_for_request'/></td>
+                    </tr>
+                </table>
+                 <tr>
+                    <div style="text-align:left;"><strong>I hereby acknowledge the fact that the company will have the right to inform to repay the loan amount in full at any pont of time.</strong></div>
+                </tr>
+                <br/>
+                <tr>
+                    <div style="text-align:center; background-color:#ededed;font-weight:bold;"><strong>HUMAN RESOURCE DEPARTMENT</strong></div>
+                </tr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:30%;padding-left:5px;">Date of Joining</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.date_of_joining'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;padding-left:5px;">Basic Salary</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_basic_salary'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;padding-left:5px;">Previous Loans</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_previous_loans'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding-left:5px;">Pending Loan Amount</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_pending_loan_amount'/></td>
+                    </tr>
+                </table>
+                <tr>
+                    <div style="text-align:center; background-color:#ededed;font-weight:bold;"><strong>ELIGIBILITY</strong></div>
+                </tr>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:30%;padding-left:5px;">Eligible Loan Amount</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_eligible_loan_amount'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;padding-left:5px;">Recommended Loan Amount</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_recommended_loan_amount'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;padding-left:5px;">Loan Approved</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_loan_approved'/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding-left:5px;">No. of Installments</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_no_of_installments'/></td>
+                    </tr>
+                     <tr>
+                        <td style="width:30%;padding-left:5px;">Monthly Deduction Amount</td>
+                        <td style="width:2%;text-align:center;border-left:hidden;border-right:hidden;">:</td>
+                        <td style="width:68%;"><span t-field='o.lrf_monthly_deduction_amount'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;">
+                    <div>
+                        <td style="width:50%; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">FINANCE DEPARTMENT</td>
+                    </div>
+                    <div>
+                        <td style="width:50%;border-left:hidden; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">MANAGEMENT</td>
+                    </div>
+                </table>
+                <table style="width:100%;" class="table-striped">
+                    <tr>
+                        <td style="width:20%;padding-left:5%;">Loan Approved</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.lrf_finance_loan_approved' /></td>
+                        <td style="width:20%;padding-left: 5%;">Loan Approved</td>
+                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
+                        <td style="width:28%;border-left:hidden;"><span t-field='o.lrf_mgmt_loan_approved'/></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                    <tr>
+                        <td style="width:80%; text-align:right;"></td>
+                        <td style="width:20%; text-align:center;border-left:hidden; background-color:#ededed;font-weight:bold;">Approved By</td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-foreach="o.approver_ids" t-as="approver">
+                    <table style="width:100%;text-align:right;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden;">
+                        <tr>
+                            <td style="width:60%;"></td>
+                            <td style="width:40%;border-left:hidden;"><t t-esc="approver['user_id']['name']"/><span style="font-size:11px;">(<t t-esc="approver['from_stage_id']['name']"/>)</span></td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="report_loan_request_form_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
+                    <t t-call="request.report_loan_request_request" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_loan_request_request"
+            string="Loan Request Form"
+            model="employee.request"
+            report_type="qweb-pdf"
+            file="request.report_loan_request_form_request"
+            name="request.report_loan_request_form_request"
+            menu="False"
+        />
+
+    </data>
+</odoo>
