@@ -7,6 +7,9 @@
                 <div class="page" style="font-size:15px;">
                     <h2 class='text-center'><span>Promotion And Increment Letter</span></h2>
                 </div>
+                 <div style="width:100%;">
+                    <div style="width:100%; text-align:right;"><b>Ref: <span t-field='o.ref_no' /></b></div>
+                </div>
                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
                     <tr>
                         <td style="width:50%;border-right:hidden;"></td>

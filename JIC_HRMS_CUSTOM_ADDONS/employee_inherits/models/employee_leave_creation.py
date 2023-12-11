@@ -15,7 +15,7 @@ from odoo.tools import date_utils
 from itertools import groupby
 from datetime import datetime
 from operator import itemgetter
-import pandas as pds
+# import pandas as pds
 
 class WeekOff(models.Model):
     _name = "week.off"

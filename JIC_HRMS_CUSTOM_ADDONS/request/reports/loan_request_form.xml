@@ -8,6 +8,9 @@
                     <h2 class='text-center'><span>Loan Request Form</span></h2>
                 </div>
                 <br/>
+                 <div style="width:100%;">
+                    <div style="width:100%; text-align:right;"><b>Ref: <span t-field='o.ref_no' /></b></div>
+                </div>
                  <tr>
                     <div style="text-align:center; background-color:#ededed;font-weight:bold;"><strong>EMPLOYEE DETAILS</strong></div>
                 </tr>

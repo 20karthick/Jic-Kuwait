@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="report_change_pay_request">
+        <template id="report_sim_acknowledge_request">
             <t t-call="web.external_layout">
                 <t t-set="o" t-value="o.with_context(lang=lang)" />
                 <div class="page" style="font-size:15px;">
-                    <h2 class='text-center'><span>Change In Pay</span></h2>
+                    <h2 class='text-center'><span>SIM Acknowledge Form</span></h2>
                 </div>
                 <br/>
                  <div style="width:100%;">
@@ -59,63 +59,51 @@
                     </tr>
                 </table>
                 <br/>
-                <br/>
                  <table style="width:100%;">
                     <tr>
-                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">Change in Pay Details</td>
+                        <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">SIM DETAILS</td>
                     </tr>
-                </table>
-                <br/>
-                <table style="width:100%;">
-                    <div>
-                        <td style="width:50%; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Existing</td>
-                    </div>
-                    <div>
-                        <td style="width:50%;border-left:hidden; text-align:center;border-bottom:hidden; background-color:#ededed;font-weight:bold;">Revision</td>
-                    </div>
                 </table>
                 <table style="width:100%;" class="table-striped">
                     <tr>
-                        <td style="width:20%;padding-left:15px;">Basic Salary</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.existing_basic_salary' /></td>
-                        <td style="width:20%;padding-left: 15px;">Basic Salary</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.revision_basic_salary'/></td>
+                        <td style="width:50%;text-align:right;"><b>Contact Number :</b></td>
+                        <td style="width:50%;padding-left:5px;border-left:hidden;text-align:left;"><span t-field='o.sim_contact_number' /></td>
                     </tr>
                     <tr>
-                        <td style="width:20%;padding-left: 15px;">Additional Allowance</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.existing_add_allowance'/></td>
-                        <td style="width:20%;padding-left: 15px;">Additional Allowance</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.revision_add_allowance' /></td>
+                        <td style="width:50%;text-align:right;"><b>Network Provider :</b></td>
+                        <td style="width:50%;padding-left:5px;border-left:hidden;text-align:left;"><span t-field='o.sim_network_provider' /></td>
                     </tr>
                     <tr>
-                        <td style="width:20%;padding-left: 15px;">Gross Salary</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.existing_gross_salary'/></td>
-                        <td style="width:20%;padding-left: 15px;">Gross Salary</td>
-                        <td style="width:2%;border-left:hidden;text-align:center;">:</td>
-                        <td style="width:28%;border-left:hidden;"><span t-field='o.revision_gross_salary' /></td>
+                        <td style="width:50%;text-align:right;"><b>SIM Serial Number :</b></td>
+                        <td style="width:50%;padding-left:5px;border-left:hidden;text-align:left;"><span t-field='o.sim_serial_number'/></td>
                     </tr>
                 </table>
                 <br/>
-                <tr>
-                    <td style="width:30%; text-align:center;font-weight:bold;">Revised Pay Effective Date</td>
-                     <td style="width:2%;border-left:hidden;font-weight:bold;text-align:center;">:</td>
-                    <td style="width:68%; text-align:left;border-left:hidden;"><span t-field='o.revised_date'/></td>
-                </tr>
-                <br/>
-                <table style="width:100%;" class="table-hover">
-                    <tr>
-                        <td style="width:20%; text-align:center;font-weight:bold;">Justification / Reasons</td>
-                         <td style="width:2%;border-left:hidden;font-weight:bold;text-align:center;">:</td>
-                        <td style="width:78%; text-align:left;border-left:hidden;"><span t-field='o.justification'/></td>
-                    </tr>
-                </table>
-                <br/>
-                <br/>
+                <div>
+                    <p>
+                        This SIM card is exclusively a property of Jobin International Company &#38; is given to you solely for JIC Group business purposes.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        The primary purpose of this company-provided SIM card is to ensure that I can be reached by JIC clients or business associates during working hours and as needed.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        JIC pays for local calls &#38; internet usage, and JIC is not responsible for any international call charges or international roaming charges over &#38; any other charges other than what is specified here.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        When you are proceeding on your annual leave or at the event of leaving the organization, your SIM card should be returned to the office.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        I agree not to cause any damage to the SIM card through negligence or misuse.
+                    </p>
+                </div>
                 <table style="width:100%;">
                     <tr>
                         <td style="width:100%; text-align:center; background-color:#ededed;font-weight:bold;">APPROVALS</td>
@@ -137,26 +125,46 @@
                         </tr>
                     </table>
                 </t>
+                <br/>
+                 <div>
+                    <p>
+                       I have read &#38; understood the terms &#38; conditions mentioned above.
+                    </p>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <table style="width:100%;border-top:hidden;border-left:hidden;border-right:hidden;border-bottom:hidden">
+                    <tr>
+                        <td style="width:70%;border-right:hidden;"></td>
+                        <td style="width:30%;text-align:center;padding-right:15px;"><b>Employee Signature &#38; Date</b></td>
+                    </tr>
+                </table>
+                 <div class="footer">
+                    <div class="last-page">
+                    </div>
+                </div>
             </t>
         </template>
 
 
-        <template id="report_change_in_pay_request">
+        <template id="report_sim_acknowledge_form_request">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-set="lang" t-value="o.user_id.partner_id.lang"/>
-                    <t t-call="request.report_change_pay_request" t-lang="lang"/>
+                    <t t-call="request.report_sim_acknowledge_request" t-lang="lang"/>
                 </t>
             </t>
         </template>
 
         <report
-            id="action_report_change_in_pay_request"
-            string="Change In Pay"
+            id="action_sim_acknowledge_request"
+            string="SIM Acknowledge"
             model="employee.request"
             report_type="qweb-pdf"
-            file="request.report_change_in_pay_request"
-            name="request.report_change_in_pay_request"
+            file="request.report_sim_acknowledge_form_request"
+            name="request.report_sim_acknowledge_form_request"
             menu="False"
         />
 

@@ -20,10 +20,9 @@ class EmployeeRequest(models.Model):
     _description = "Request"
     _inherit = ['portal.mixin', 'mail.thread.cc', 'mail.activity.mixin', 'rating.mixin']
 
-    # def _default_stage_id(self):
-    #     # Since project stages are order by sequence first, this should fetch the one with the lowest sequence number.
-    #     return self.env['request.stage'].search([('request_type', '=', self.request_type)],limit=1)
 
+    reference_number = fields.Char(string='Ref No', default='NEW', readonly=True)
+    ref_no = fields.Char(string='Reference Number', readonly=True)
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True)
     emp_code = fields.Char(string='Employee Code', compute='_compute_get_employee_details', store=True)
     job_title = fields.Char(string='Job Title', compute='_compute_get_employee_details', store=True)
@@ -33,6 +32,7 @@ class EmployeeRequest(models.Model):
     manager_id = fields.Many2one('hr.employee', "Line Manager", compute='_compute_get_employee_details', store=True)
     request_type = fields.Selection([('rt_rr', 'Residence Transfer/ Renewal Request'),
                                      ('cp', 'Change in Pay'),
+                                     ('sim', 'SIM Acknowledgment'),
                                      ('maf', 'Mobile Acknowledgment'),
                                      ('paf', 'Passport Acknowledgment'),
                                      ('prf', 'Passport Release'),
@@ -71,6 +71,15 @@ class EmployeeRequest(models.Model):
 
     civil_passport_join = fields.Char(string='civil Passport join', compute='_join_civil_passport', store=True)
     approver_ids = fields.One2many('request.approver.history', 'request_id', string='Approved Stage', copy=True)
+
+    @api.model
+    def create(self, vals):
+        vals['reference_number'] = self.env['ir.sequence'].next_by_code('employee.request') or 'New'
+        s = dict(self._fields.get('request_type').selection).get(vals['request_type'])
+        fl = next(zip(*s.split()))
+        st = ''.join(map(str, fl))
+        vals['ref_no'] = st.replace('"', '').upper() + "/" + vals['reference_number']
+        return super(EmployeeRequest, self).create(vals)
 
     @api.depends('civil_id', 'passport_id')
     def _join_civil_passport(self):
@@ -132,6 +141,8 @@ class EmployeeRequest(models.Model):
             return self.env.ref('request.action_internship_certificate').report_action(self)
         elif self.request_type == 'taf':
             return self.env.ref('request.action_tablet_acknowledgment').report_action(self)
+        elif self.request_type == 'sim':
+            return self.env.ref('request.action_sim_acknowledge_request').report_action(self)
         else:
             raise UserError(_("There is no pdf Report."))
 
@@ -158,13 +169,13 @@ class EmployeeRequest(models.Model):
                 else:
                     raise UserError(_("Only %s Line Manager can refuse it.", manager.name))
 
-            if self.stage_id.department:
-                if self.stage_id.department == self.env.user.department:
+            if self.stage_id.department_id:
+                if self.stage_id.department_id in self.env.user.department_ids:
                     self.env["request.approver.history"].search([('request_id', '=', self.id), ('from_stage_id', '=', stage.id), ('to_stage_id', '=', self.stage_id.id)]).unlink()
                     self.stage_id = stage.id
                     self.invisible_buttons = False
                 else:
-                    raise UserError(_("Only %s Department user can refuse it.", self.stage_id.department))
+                    raise UserError(_("Only %s Department user can refuse it.", self.stage_id.department_id))
         else:
             raise UserError(_("Already you are in requesting stage."))
 
@@ -222,9 +233,9 @@ class EmployeeRequest(models.Model):
                 else:
                     raise UserError(_("Only Line Manager can approve it."))
 
-            elif self.stage_id.department:
-                department = self.stage_id.department
-                if department == self.env.user.department:
+            elif self.stage_id.department_id:
+                department = self.stage_id.department_id
+                if department in self.env.user.department_ids:
                     seq = self.stage_id.sequence
                     seq_number = seq + 1
                     stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)
@@ -247,7 +258,7 @@ class EmployeeRequest(models.Model):
                         if not self.invisible_buttons:
                             raise UserError(_("Kindly check the stage Sequence or enable which one is end stage."))
                 else:
-                    raise UserError(_("Only %s Department user can approve it.", self.stage_id.department))
+                    raise UserError(_("Only %s user can approve it.", self.stage_id.department_id.name))
         else:
             raise UserError(_("Check whether request stages or request type exists in this request or not. If not inform to HR."))
 
@@ -273,7 +284,7 @@ class EmployeeRequest(models.Model):
             search_domain = [('|')] * (len(request_ids) - 1)
             for rec in request_ids:
                 search_domain.append(('request_type', '=', rec))
-                search_domain.append(('company_id', '=', self.company_id.id))
+                search_domain.append(('company_id', 'in', self.company_id.ids))
         search_domain += list(domain)
         # perform search, return the first found
         return self.env['request.stage'].search(search_domain, order=order, limit=1).id
@@ -560,3 +571,8 @@ class EmployeeRequest(models.Model):
     taf_laptop_bag = fields.Selection([('yes', 'Yes'), ('no', 'No')], 'Laptop Bag', tracking=True)
     taf_date_of = fields.Date(string="Date of", tracking=True)
     taf_title = fields.Selection([('mr', 'Mr.'), ('ms', 'Ms.'), ('mrs', 'Mrs.'), ('miss', 'Miss.')], 'Title', tracking=True)
+
+    # SIM Acknowledge form
+    sim_contact_number = fields.Char(string="Contact Number", tracking=True)
+    sim_network_provider = fields.Char(string="Network Provider", tracking=True)
+    sim_serial_number = fields.Char(string="SIM Serial No.", tracking=True)

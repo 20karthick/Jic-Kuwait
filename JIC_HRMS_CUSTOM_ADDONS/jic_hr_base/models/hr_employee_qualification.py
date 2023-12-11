@@ -14,7 +14,7 @@ class HrEmployeeQualification(models.Model):
     subject_id = fields.Many2one("hr.employee.qualification.subject", string="Subject", required=True)
     institution_id = fields.Many2one("hr.employee.qualification.institution", string="Institution", required=True)
     university_id = fields.Many2one("hr.employee.qualification.university", string="University", required=True)
-    year_of_passing = fields.Selection(selection=_get_year_of_passing, string="Year of Passing")
+    year_of_passing = fields.Char(string="Year of Passing")
     doc_attachment_ids = fields.Many2many('ir.attachment', 'employee_qualification_attach_rel', 'emp_qualification_id', 'attach_id', string="Attachment",
                                          help='You can attach the copy of your document', copy=False)
     employee_id = fields.Many2one("hr.employee", string="Employee", ondelete="cascade")

@@ -59,11 +59,7 @@ class ResumeLineInherit(models.Model):
 class ResUsersInheritsUserGroup(models.Model):
     _inherit = 'res.users'
 
-    department = fields.Selection([('d1', 'Department 1'), ('d2', 'Department 2'), ('d3', 'Department 3'),
-                                   ('d4', 'Department 4'), ('d5', 'Department 5'), ('d6', 'Department 6'),
-                                   ('d7', 'Department 7'), ('d8', 'Department 8'), ('d9', 'Department 9'),
-                                   ('d10', 'Department 10'), ('d11', 'Department 11'), ('d12', 'Department 12'),
-                                   ], 'Approved Department')
+    department_ids = fields.Many2many("departments.twelve", string='Approval Department')
 
     @api.model
     def user_group_access(self):

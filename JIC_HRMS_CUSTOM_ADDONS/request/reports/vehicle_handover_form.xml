@@ -8,6 +8,9 @@
                     <h2 class='text-center'><span>Vehicle Handover Form</span></h2>
                 </div>
                 <br/>
+                 <div style="width:100%;">
+                    <div style="width:100%; text-align:right;"><b>Ref: <span t-field='o.ref_no' /></b></div>
+                </div>
                 <div>
                     <p>
                         To be Filled at the time employee is leaving the company or when he is asked to handover the vehicle by reporting manager, HR and Management.
