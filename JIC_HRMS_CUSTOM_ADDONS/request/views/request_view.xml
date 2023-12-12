@@ -21,7 +21,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Submit" class="btn-primary" type="object" name="approve" attrs="{'invisible': [('invisible_buttons', '=', True)]}"/>
+                    <button string="Submit / Approve" class="btn-primary" type="object" name="approve" attrs="{'invisible': [('invisible_buttons', '=', True)]}"/>
                     <button string="Refuse" type="object" name="reject" attrs="{'invisible': [('invisible_buttons', '=', True)]}"/>
                     <button string="Download PDF" class="btn-primary" type="object" name="print_report" attrs="{'invisible': [('invisible_buttons', '!=', True)]}"/>
                     <field name="stage_id" widget="statusbar" attrs="{'invisible': [('request_type', '=', False), ('stage_id', '=', False)]}"/>

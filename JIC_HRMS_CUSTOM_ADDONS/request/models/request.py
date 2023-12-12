@@ -162,7 +162,7 @@ class EmployeeRequest(models.Model):
         if stage:
             if self.stage_id.line_manager:
                 manager = self.employee_id.parent_id
-                if manager.user_id == self.env.user:
+                if manager.user_id == self.env.user or self.user_has_groups('request.group_request_administrator'):
                     self.env["request.approver.history"].search([('request_id', '=', self.id), ('from_stage_id', '=', stage.id), ('to_stage_id', '=', self.stage_id.id)]).unlink()
                     self.stage_id = stage.id
                     self.invisible_buttons = False
@@ -183,7 +183,7 @@ class EmployeeRequest(models.Model):
     def approve(self):
         if self.stage_id and self.request_type:
             if self.stage_id.start_stage:
-                if self.user_id == self.env.user:
+                if self.user_id == self.env.user or self.user_has_groups('request.group_request_administrator'):
                     seq = self.stage_id.sequence
                     seq_number = seq + 1
                     stage = self.env['request.stage'].search([('request_type', '=', self.request_type), ('company_id', '=', self.company_id.id),('sequence', '=', seq_number)], limit=1)
@@ -205,10 +205,11 @@ class EmployeeRequest(models.Model):
 
             elif self.stage_id.line_manager:
                 manager = self.employee_id.parent_id
-                if not manager:
-                    raise UserError(_("Manager Not Mapped For requested employee(%s)", self.employee_id.name))
+                if not self.user_has_groups('request.group_request_administrator'):
+                    if not manager:
+                        raise UserError(_("Manager Not Mapped For requested employee(%s)", self.employee_id.name))
 
-                if manager.user_id == self.env.user:
+                if manager.user_id == self.env.user or self.user_has_groups('request.group_request_administrator'):
                     seq = self.stage_id.sequence
                     seq_number = seq + 1
                     stage = self.env['request.stage'].search([('request_type', '=', self.request_type),('company_id', '=', self.company_id.id), ('sequence', '=', seq_number)], limit=1)

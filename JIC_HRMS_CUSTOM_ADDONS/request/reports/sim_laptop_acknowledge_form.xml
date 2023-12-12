@@ -7,7 +7,6 @@
                 <div class="page" style="font-size:15px;">
                     <h2 class='text-center'><span>SIM Acknowledge Form</span></h2>
                 </div>
-                <br/>
                  <div style="width:100%;">
                     <div style="width:100%; text-align:right;"><b>Ref: <span t-field='o.ref_no' /></b></div>
                 </div>
@@ -81,27 +80,11 @@
                 <br/>
                 <div>
                     <p>
-                        This SIM card is exclusively a property of Jobin International Company &#38; is given to you solely for JIC Group business purposes.
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        The primary purpose of this company-provided SIM card is to ensure that I can be reached by JIC clients or business associates during working hours and as needed.
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        JIC pays for local calls &#38; internet usage, and JIC is not responsible for any international call charges or international roaming charges over &#38; any other charges other than what is specified here.
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        When you are proceeding on your annual leave or at the event of leaving the organization, your SIM card should be returned to the office.
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        I agree not to cause any damage to the SIM card through negligence or misuse.
+                        1.This SIM card is exclusively a property of Jobin International Company &#38; is given to you solely for JIC Group business purposes.<br/>
+                        2.The primary purpose of this company-provided SIM card is to ensure that I can be reached by JIC clients or business associates during working hours and as needed.<br/>
+                        3.JIC pays for local calls &#38; internet usage, and JIC is not responsible for any international call charges or international roaming charges over &#38; any other charges other than what is specified here.<br/>
+                        4.When you are proceeding on your annual leave or at the event of leaving the organization, your SIM card should be returned to the office.<br/>
+                        5.I agree not to cause any damage to the SIM card through negligence or misuse.
                     </p>
                 </div>
                 <table style="width:100%;">
@@ -131,7 +114,6 @@
                        I have read &#38; understood the terms &#38; conditions mentioned above.
                     </p>
                 </div>
-                <br/>
                 <br/>
                 <br/>
                 <br/>
