@@ -5,6 +5,32 @@ from datetime import datetime, date, timedelta, time
 import json
 from lxml import etree
 
+
+class SaleOrderInherit(models.Model):
+    _inherit = 'sale.order'
+
+    inv_number = fields.Char(string="INV Number")
+
+class ResCompanyInherit(models.Model):
+    _inherit = 'res.company'
+
+    header_name = fields.Char(string="Header Name")
+    header_name_two = fields.Char(string="Header Two")
+    header_logo = fields.Binary(string="Header Logo")
+    bank_name = fields.Char(string="Bank Name")
+    account_name = fields.Char(string="Account Name")
+    account_number = fields.Char(string="Account Number")
+    iban = fields.Char(string="IBAN")
+    swift = fields.Char(string="SWIFT")
+    branch = fields.Char(string="Branch")
+    sq_currency_id = fields.Many2one('res.currency', string='Currency')
+    price_digits = fields.Integer(string='Digits')
+    footer_phone = fields.Char(string="Footer Phone")
+    footer_mail1 = fields.Char(string="Footer Mail 1")
+    footer_mail2 = fields.Char(string="Footer Mail 2")
+    location = fields.Text(string="Location")
+
+
 class RequestApproverHistory(models.Model):
     _name = 'request.approver.history'
 

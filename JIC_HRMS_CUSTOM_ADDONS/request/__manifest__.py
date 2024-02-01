@@ -13,7 +13,7 @@
     'maintainer': 'JIC',
     'support': 'jic@gmail.com',
     'website': 'https://www.jic.com',
-    'depends': ['base', 'web', 'hr'],
+    'depends': ['base', 'web', 'hr', 'sale'],
     'live_test_url': '',
     'data': ['security/request_security.xml',
              'security/ir.model.access.csv',
@@ -46,6 +46,7 @@
              'reports/no_objection_letter_to_embassy.xml',
              'reports/internship_certificate.xml',
              'reports/tablet_acknowledgement.xml',
+             'reports/quotation_report.xml',
              ],
 
     'pre_init_hook': '',
