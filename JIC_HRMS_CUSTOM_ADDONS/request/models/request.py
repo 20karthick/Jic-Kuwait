@@ -11,6 +11,43 @@ class SaleOrderInherit(models.Model):
 
     inv_number = fields.Char(string="INV Number")
 
+class SaleOrderLineInherit(models.Model):
+    _inherit = 'sale.order.line'
+
+    standard_price = fields.Float(string="Cost")
+    percentage = fields.Float(string="Percentage")
+
+    @api.onchange('product_id')
+    def onchange_product(self):
+        if self.product_id:
+            self.standard_price = self.product_template_id.standard_price
+            self.percentage = self.product_template_id.percentage
+
+
+class ProductProductInherit(models.Model):
+    _inherit = 'product.product'
+
+    percentage = fields.Float(string="Percentage")
+
+    @api.onchange('percentage')
+    def onchange_percentage(self):
+        for rec in self:
+            if rec.standard_price:
+                rec.lst_price = rec.standard_price * rec.percentage / 100 + rec.standard_price
+
+class ProductTemplateInherit(models.Model):
+    _inherit = 'product.template'
+
+    percentage = fields.Float(string="Percentage")
+
+    @api.onchange('percentage')
+    def onchange_percentage(self):
+        for rec in self:
+            if rec.standard_price:
+                rec.list_price = rec.standard_price * rec.percentage / 100 + rec.standard_price
+
+
+
 class ResCompanyInherit(models.Model):
     _inherit = 'res.company'
 
@@ -29,6 +66,8 @@ class ResCompanyInherit(models.Model):
     footer_mail1 = fields.Char(string="Footer Mail 1")
     footer_mail2 = fields.Char(string="Footer Mail 2")
     location = fields.Text(string="Location")
+    terms_and_condition = fields.Boolean(string="Terms And Condition")
+    customer_seller = fields.Boolean(string="Customer And Seller")
 
 
 class RequestApproverHistory(models.Model):
@@ -603,3 +642,5 @@ class EmployeeRequest(models.Model):
     sim_contact_number = fields.Char(string="Contact Number", tracking=True)
     sim_network_provider = fields.Char(string="Network Provider", tracking=True)
     sim_serial_number = fields.Char(string="SIM Serial No.", tracking=True)
+
+
